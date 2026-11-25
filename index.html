@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visión Inmobiliaria | Búsqueda a la medida de propiedades en México</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e40af'/%3E%3Cstop offset='100%25' stop-color='%23172554'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%23fbbf24' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 29L32 13l20 16'/%3E%3Cpath d='M18 25v23a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V25'/%3E%3Cpath d='M27 51V37a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v14'/%3E%3C/g%3E%3C/svg%3E" />
+  <meta name="description" content="Visión Inmobiliaria: búsqueda a la medida de casas, departamentos, terrenos o locales en cualquier parte de México. Atención binacional para paisanos en EE. UU. y residentes en México." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-amber-200 selection:text-blue-950">
+
+  <!-- Barra superior informativa binacional -->
+  <div class="bg-blue-950 text-white text-xs py-1.5 px-4 border-b border-blue-900">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
+      <p class="text-blue-100 text-center sm:text-left font-medium">
+        Búsqueda personalizada en todo México · Atención directa en EE. UU. y México
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-3 font-semibold">
+        <a href="tel:+19154787644" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+          <span class="inline-block w-2 h-2 rounded-full bg-amber-400"></span>
+          EE. UU.: +1 915 478 7644
+        </a>
+        <span class="text-blue-700 hidden sm:inline">|</span>
+        <a href="tel:+526562066331" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          México: +52 656 206 6331
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Header compacto y responsive -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-3">
+        <!-- Marca -->
+        <a href="#inicio" class="flex items-center gap-2.5 group shrink-0">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-xs group-hover:from-blue-950 group-hover:to-blue-800 transition">
+            <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5M5.25 9.75V19.5A1.5 1.5 0 006.75 21h10.5a1.5 1.5 0 001.5-1.5V9.75M9.75 21v-5.25a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21" />
+            </svg>
+          </div>
+          <div>
+            <span class="block text-base sm:text-lg font-extrabold tracking-tight text-blue-950 leading-none">
+              Visión Inmobiliaria
+            </span>
+            <span class="block text-[11px] font-medium text-slate-500 mt-0.5">
+              A tu medida en México
+            </span>
+          </div>
+        </a>
+
+        <!-- Navegación Desktop -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
+          <a href="#como-funciona" class="hover:text-blue-900 transition-colors">Cómo funciona</a>
+          <a href="#paisanos" class="hover:text-blue-900 transition-colors">Paisanos EE. UU.</a>
+          <a href="#perfiles" class="hover:text-blue-900 transition-colors">Perfiles</a>
+          <a href="#faq" class="hover:text-blue-900 transition-colors">FAQ</a>
+        </nav>
+
+        <!-- Botones directos a WhatsApp -->
+        <div class="hidden md:flex items-center gap-2 shrink-0">
+          <a href="https://wa.me/19154787644" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition">
+            <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.531.078-1.203.109-1.938-.125-.453-.141-1.031-.344-1.766-.656-3.094-1.344-5.109-4.469-5.266-4.672-.156-.203-1.266-1.688-1.266-3.219s.797-2.281 1.078-2.594c.281-.313.609-.391.813-.391.203 0 .406 0 .578.016.188.016.438-.078.688.531.25.609.859 2.094.938 2.25.078.156.125.344.016.547-.109.203-.156.328-.313.5-.156.172-.328.391-.469.531-.156.156-.328.328-.141.641.188.313.844 1.391 1.813 2.25 1.25 1.109 2.297 1.453 2.609 1.609.313.156.5.125.688-.078.188-.203.797-.922 1.016-1.234.219-.313.422-.266.719-.156.297.109 1.875.891 2.188 1.047.313.156.516.234.594.359.078.125.078.734-.172 1.438z"/>
+            </svg>
+            <span>WhatsApp EE. UU.</span>
+          </a>
+          <a href="https://wa.me/526562066331" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs sm:text-sm font-bold shadow-xs transition">
+            <span>WhatsApp México</span>
+          </a>
+        </div>
+
+        <!-- Botón menú móvil -->
+        <button type="button" id="mobile-menu-btn" aria-label="Abrir menú de navegación" aria-expanded="false"
+                class="lg:hidden inline-flex items-center justify-center p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-800">
+          <svg id="menu-icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menú móvil desplegable -->
+      <div id="mobile-menu" class="hidden lg:hidden pb-3 pt-2 border-t border-slate-100 space-y-2.5">
+        <nav class="flex flex-col space-y-1 text-sm font-semibold text-slate-700">
+          <a href="#como-funciona" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Cómo funciona</a>
+          <a href="#paisanos" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Paisanos en EE. UU.</a>
+          <a href="#perfiles" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Perfiles</a>
+          <a href="#faq" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Preguntas frecuentes</a>
+        </nav>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+          <a href="https://wa.me/19154787644" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold">
+            WhatsApp EE. UU. (+1 915 478 7644)
+          </a>
+          <a href="https://wa.me/526562066331" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-900 text-white text-xs font-bold">
+            WhatsApp México (+52 656 206 6331)
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Hero integrado con widget de encargo a la medida -->
+  <section id="inicio" class="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 pt-7 pb-9 sm:pt-9 sm:pb-11">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <img
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
+        alt="Residencia moderna luminosa con patio y fachada cálida"
+        onerror="this.onerror=null;this.src='https://placehold.co/1800x900/0f294a/e2e8f0?text=Vision+Inmobiliaria';"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-950/85 to-blue-900/80"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+
+        <!-- Columna izquierda: Propuesta de valor + tarjeta visual integrada -->
+        <div class="lg:col-span-6 space-y-4 text-white">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-300/40 text-amber-200 text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+            <span>Búsqueda a la medida en todo México · EE. UU. y MX</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-tight leading-[1.08]">
+            Encontramos la propiedad que buscas en México, <span class="text-amber-300">sin perder tiempo</span>.
+          </h1>
+
+          <p class="text-sm sm:text-base text-blue-100/95 leading-relaxed">
+            Buscamos casas, departamentos, terrenos o locales según tu ciudad, presupuesto y meta—tanto si vives en México como si eres paisano en Estados Unidos.
+          </p>
+
+          <!-- Tarjeta visual compacta con datos clave -->
+          <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-900/90 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-12 items-center">
+              <div class="sm:col-span-5 h-32 sm:h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80"
+                  alt="Sala y comedor luminosos con diseño moderno"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/1e3a8a/ffffff?text=Hogar+en+Mexico';"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="sm:col-span-7 p-3.5 sm:p-4 space-y-2">
+                <p class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300">Atención directa y clara</p>
+                <p class="text-xs sm:text-sm text-slate-200 leading-snug">
+                  Filtramos opciones reales, verificamos información disponible y te acompañamos a distancia o en persona.
+                </p>
+                <div class="flex flex-wrap items-center gap-2 pt-0.5 text-xs">
+                  <a href="tel:+19154787644" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-amber-200 font-bold transition">
+                    EE. UU. +1 915 478 7644
+                  </a>
+                  <a href="tel:+526562066331" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-emerald-300 font-bold transition">
+                    MX +52 656 206 6331
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Formulario de encargo directo a WhatsApp -->
+        <div class="lg:col-span-6">
+          <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden">
+            <div class="h-1.5 bg-gradient-to-r from-blue-900 via-amber-400 to-emerald-500"></div>
+            <div class="p-5 sm:p-6">
+              <div class="mb-4">
+                <span class="inline-block text-[11px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+                  Encargo personalizado
+                </span>
+                <h2 class="text-lg sm:text-xl font-extrabold text-blue-950">
+                  Cuéntanos qué propiedad buscas en México
+                </h2>
+              </div>
+
+              <form id="encargo-form" onsubmit="enviarEncargoWhatsApp(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label for="intencion" class="block text-xs font-bold text-slate-700 mb-1">
+                      ¿Cuál es tu objetivo?
+                    </label>
+                    <select id="intencion" name="intencion" required
+                            class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 font-medium focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition">
+                      <option value="Comprar hogar">Comprar hogar</option>
+                      <option value="Rentar propiedad">Rentar propiedad</option>
+                      <option value="Invertir en inmuebles">Invertir en inmuebles</option>
+                      <option value="Retorno a México desde EE. UU.">Retorno desde EE. UU.</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="tipo_propiedad" class="block text-xs font-bold text-slate-700 mb-1">
+                      Tipo de propiedad
+                    </label>
+                    <select id="tipo_propiedad" name="tipo_propiedad" required
+                            class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 font-medium focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition">
+                      <option value="Casa">Casa</option>
+                      <option value="Departamento">Departamento</option>
+                      <option value="Terreno / Lote">Terreno / Lote</option>
+                      <option value="Local / Bodega">Local / Bodega</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="ciudad" class="block text-xs font-bold text-slate-700 mb-1">
+                    Ciudad o estado de México
+                  </label>
+                  <input type="text" id="ciudad" name="ciudad" required
+                         placeholder="Ej. Ciudad Juárez, Guadalajara, Monterrey, Querétaro..."
+                         class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition" />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label for="presupuesto" class="block text-xs font-bold text-slate-700 mb-1">
+                      Presupuesto estimado
+                    </label>
+                    <input type="text" id="presupuesto" name="presupuesto" required
+                           placeholder="Ej. $1,800,000 MXN o $100k USD"
+                           class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition" />
+                  </div>
+
+                  <div>
+                    <label for="linea_contacto" class="block text-xs font-bold text-slate-700 mb-1">
+                      Línea WhatsApp
+                    </label>
+                    <select id="linea_contacto" name="linea_contacto" required
+                            class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 font-medium focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition">
+                      <option value="usa">EE. UU. (+1 915 478 7644)</option>
+                      <option value="mx">México (+52 656 206 6331)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button type="submit"
+                        class="w-full mt-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 transition cursor-pointer">
+                  <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.531.078-1.203.109-1.938-.125-.453-.141-1.031-.344-1.766-.656-3.094-1.344-5.109-4.469-5.266-4.672-.156-.203-1.266-1.688-1.266-3.219s.797-2.281 1.078-2.594c.281-.313.609-.391.813-.391.203 0 .406 0 .578.016.188.016.438-.078.688.531.25.609.859 2.094.938 2.25.078.156.125.344.016.547-.109.203-.156.328-.313.5-.156.172-.328.391-.469.531-.156.156-.328.328-.141.641.188.313.844 1.391 1.813 2.25 1.25 1.109 2.297 1.453 2.609 1.609.313.156.5.125.688-.078.188-.203.797-.922 1.016-1.234.219-.313.422-.266.719-.156.297.109 1.875.891 2.188 1.047.313.156.516.234.594.359.078.125.078.734-.172 1.438z"/>
+                  </svg>
+                  <span>Enviar encargo por WhatsApp</span>
+                </button>
+
+                <p class="text-[11px] text-center text-slate-500">
+                  Abre WhatsApp con tu solicitud lista para comenzar a revisar opciones.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Cómo funciona en 3 pasos compactos -->
+  <section id="como-funciona" class="py-10 sm:py-12 bg-white border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6">
+        <div>
+          <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+            Proceso simple
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-950">
+            ¿Cómo trabajamos tu búsqueda?
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600 max-w-md">
+          Tres pasos claros desde tu encargo inicial hasta el cierre de tu operación.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Paso 1 -->
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-md transition flex flex-col">
+          <div class="h-32 overflow-hidden bg-slate-200 relative">
+            <img
+              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"
+              alt="Llaves y planificación de propiedad"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x400/dbeafe/1e3a8a?text=Paso+01';"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-xs font-extrabold">
+              01 · Encargo
+            </span>
+          </div>
+          <div class="p-4 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Define lo que buscas</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Indica tipo de inmueble, ciudad o estado en México, presupuesto aproximado y si buscas comprar, rentar, invertir o regresar.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-md transition flex flex-col">
+          <div class="h-32 overflow-hidden bg-slate-200 relative">
+            <img
+              src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=800&q=80"
+              alt="Revisión y validación de propiedades"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x400/fef3c7/92400e?text=Paso+02';"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-blue-950 text-xs font-extrabold">
+              02 · Búsqueda
+            </span>
+          </div>
+          <div class="p-4 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Filtro y validación previa</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Ubicamos opciones acordes a tu perfil, revisamos disponibilidad y verificamos información básica antes de presentártelas.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-md transition flex flex-col">
+          <div class="h-32 overflow-hidden bg-slate-200 relative">
+            <img
+              src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+              alt="Patio y cierre de operación residencial"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x400/d1fae5/065f46?text=Paso+03';"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-extrabold">
+              03 · Cierre
+            </span>
+          </div>
+          <div class="p-4 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Acompañamiento real</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Coordinamos recorridos presenciales o a distancia y mantenemos comunicación clara hasta concluir la operación.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Sección paisanos en EE. UU. integrada y visual -->
+  <section id="paisanos" class="py-9 sm:py-11 bg-slate-100/80 border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-slate-900 rounded-2xl p-5 sm:p-7 text-white shadow-lg border border-blue-800/60">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 space-y-3">
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold">
+              Paisanos en Estados Unidos
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+              ¿Vives en EE. UU. y buscas propiedad en México?
+            </h2>
+            <p class="text-xs sm:text-sm text-blue-100 leading-relaxed">
+              Te atendemos desde nuestra línea en EE. UU. y coordinamos la búsqueda en México para hogar familiar, inversión o regreso planificado.
+            </p>
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Estoy%20en%20EE.%20UU.%20y%20busco%20una%20propiedad%20en%20M%C3%A9xico."
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-sm transition">
+                WhatsApp EE. UU. (+1 915 478 7644)
+              </a>
+              <a href="tel:+19154787644"
+                 class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 font-semibold text-xs sm:text-sm transition">
+                Llamar ahora
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="rounded-xl overflow-hidden border border-white/15 bg-slate-900 shadow-md">
+              <img
+                src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80"
+                alt="Residencia moderna con patio iluminado"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x450/1e3a8a/fde68a?text=EE.UU.+a+Mexico';"
+                class="w-full h-36 sm:h-40 object-cover"
+              />
+              <div class="px-3.5 py-2.5 bg-slate-950/90 flex items-center justify-between gap-2 text-xs">
+                <span class="text-amber-300 font-bold">Seguimiento remoto</span>
+                <span class="text-slate-300">Fotos, detalles y avance claro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Perfiles rápidos de búsqueda -->
+  <section id="perfiles" class="py-10 sm:py-12 bg-white border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6">
+        <div>
+          <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+            Acceso rápido
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-950">
+            Elige tu perfil de búsqueda
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Inicia conversación directa por WhatsApp con un mensaje listo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Perfil 1 -->
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-md transition">
+          <div>
+            <div class="h-28 overflow-hidden bg-slate-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                alt="Casa familiar con fachada y jardín"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x400/dbeafe/1e3a8a?text=Comprar+Hogar';"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
+                Hogar
+              </span>
+            </div>
+            <div class="p-3.5 pb-2">
+              <h3 class="text-base font-extrabold text-blue-950 mb-1">Comprar hogar</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Casas o departamentos en la zona y presupuesto que necesitas.
+              </p>
+            </div>
+          </div>
+          <div class="p-3.5 pt-1 flex gap-1.5">
+            <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Comprar%20hogar%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+              EE. UU.
+            </a>
+            <a href="https://wa.me/526562066331?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Comprar%20hogar%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+              México
+            </a>
+          </div>
+        </div>
+
+        <!-- Perfil 2 -->
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-md transition">
+          <div>
+            <div class="h-28 overflow-hidden bg-slate-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80"
+                alt="Departamento luminoso en renta"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x400/fef3c7/92400e?text=Rentar+Propiedad';"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-amber-400 text-blue-950 text-[11px] font-extrabold">
+                Renta
+              </span>
+            </div>
+            <div class="p-3.5 pb-2">
+              <h3 class="text-base font-extrabold text-blue-950 mb-1">Rentar propiedad</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Opciones vigentes para mudanza, familia o espacio comercial.
+              </p>
+            </div>
+          </div>
+          <div class="p-3.5 pt-1 flex gap-1.5">
+            <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Rentar%20propiedad%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+              EE. UU.
+            </a>
+            <a href="https://wa.me/526562066331?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Rentar%20propiedad%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+              México
+            </a>
+          </div>
+        </div>
+
+        <!-- Perfil 3 -->
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-md transition">
+          <div>
+            <div class="h-28 overflow-hidden bg-slate-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"
+                alt="Terreno con potencial de inversión"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x400/d1fae5/065f46?text=Inversion';"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-700 text-white text-[11px] font-bold">
+                Inversión
+              </span>
+            </div>
+            <div class="p-3.5 pb-2">
+              <h3 class="text-base font-extrabold text-blue-950 mb-1">Inversión inmobiliaria</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Terrenos, lotes o propiedades con proyección patrimonial.
+              </p>
+            </div>
+          </div>
+          <div class="p-3.5 pt-1 flex gap-1.5">
+            <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Inversi%C3%B3n%20inmobiliaria%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+              EE. UU.
+            </a>
+            <a href="https://wa.me/526562066331?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Inversi%C3%B3n%20inmobiliaria%20en%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+              México
+            </a>
+          </div>
+        </div>
+
+        <!-- Perfil 4 -->
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-400 hover:shadow-md transition">
+          <div>
+            <div class="h-28 overflow-hidden bg-slate-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+                alt="Entrada de residencia para retorno"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x400/e0e7ff/1e3a8a?text=Retorno';"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
+                Retorno
+              </span>
+            </div>
+            <div class="p-3.5 pb-2">
+              <h3 class="text-base font-extrabold text-blue-950 mb-1">Retorno planificado</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Prepara tu hogar o terreno en México con anticipación desde EE. UU.
+              </p>
+            </div>
+          </div>
+          <div class="p-3.5 pt-1 flex gap-1.5">
+            <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Quiero%20planificar%20mi%20Retorno%20a%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+              EE. UU.
+            </a>
+            <a href="https://wa.me/526562066331?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Quiero%20planificar%20mi%20Retorno%20a%20M%C3%A9xico."
+               target="_blank" rel="noopener noreferrer"
+               class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+              México
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ compacto (4 preguntas esenciales) -->
+  <section id="faq" class="py-10 sm:py-12 bg-slate-100/75 border-t border-slate-200/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-5">
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+          Dudas comunes
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-950">
+          Preguntas frecuentes
+        </h2>
+      </div>
+
+      <div class="space-y-2">
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
+          <button type="button" onclick="toggleFaq(1)" aria-expanded="true" id="faq-btn-1"
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+            <span class="text-xs sm:text-sm">1. ¿Puedo buscar o comprar en México si vivo en Estados Unidos?</span>
+            <svg id="faq-icon-1" class="w-4 h-4 text-amber-600 shrink-0 transform rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="faq-content-1" class="px-4 pb-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
+            Sí. Te atendemos directamente en nuestra línea de EE. UU. (+1 915 478 7644) y coordinamos opciones en México con información remota antes de avanzar.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
+          <button type="button" onclick="toggleFaq(2)" aria-expanded="false" id="faq-btn-2"
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+            <span class="text-xs sm:text-sm">2. ¿En qué ciudades o estados de México realizan búsquedas?</span>
+            <svg id="faq-icon-2" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="faq-content-2" class="hidden px-4 pb-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
+            Trabajamos bajo encargo en cualquier parte de México. Indícanos la ciudad o estado de tu interés y revisamos opciones acordes a tu presupuesto.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
+          <button type="button" onclick="toggleFaq(3)" aria-expanded="false" id="faq-btn-3"
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+            <span class="text-xs sm:text-sm">3. ¿Qué revisan antes de presentar una propiedad?</span>
+            <svg id="faq-icon-3" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="faq-content-3" class="hidden px-4 pb-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
+            Verificamos disponibilidad, condiciones generales y documentación básica disponible, recomendando siempre formalizar compraventas ante notario público.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
+          <button type="button" onclick="toggleFaq(4)" aria-expanded="false" id="faq-btn-4"
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+            <span class="text-xs sm:text-sm">4. ¿Tiene costo enviar mi encargo inicial?</span>
+            <svg id="faq-icon-4" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="faq-content-4" class="hidden px-4 pb-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
+            No. Enviar tu encargo y tener la orientación inicial es gratuito; te explicamos con claridad cualquier condición antes de iniciar gestiones formales.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Footer compacto -->
+  <footer class="bg-blue-950 text-slate-300 py-8 border-t border-blue-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-6 border-b border-blue-900/80 items-start">
+        <div class="md:col-span-6 space-y-2">
+          <span class="block text-lg font-extrabold text-white">Visión Inmobiliaria</span>
+          <p class="text-xs sm:text-sm text-blue-200/85 leading-relaxed max-w-md">
+            Búsqueda a la medida de propiedades en México con atención directa para residentes en México y paisanos en Estados Unidos.
+          </p>
+        </div>
+
+        <div class="md:col-span-3 space-y-1.5 text-xs sm:text-sm">
+          <p class="font-bold uppercase tracking-wider text-amber-400 text-xs">EE. UU.</p>
+          <p class="font-bold text-white">+1 915 478 7644</p>
+          <div class="flex gap-3 pt-0.5">
+            <a href="tel:+19154787644" class="text-blue-200 hover:text-amber-300 transition">Llamar</a>
+            <a href="https://wa.me/19154787644" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold transition">WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 space-y-1.5 text-xs sm:text-sm">
+          <p class="font-bold uppercase tracking-wider text-emerald-400 text-xs">México</p>
+          <p class="font-bold text-white">+52 656 206 6331</p>
+          <div class="flex gap-3 pt-0.5">
+            <a href="tel:+526562066331" class="text-blue-200 hover:text-amber-300 transition">Llamar</a>
+            <a href="https://wa.me/526562066331" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold transition">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-blue-300/80">
+        <p>© 2026 Visión Inmobiliaria. Todos los derechos reservados.</p>
+        <div class="flex items-center gap-4">
+          <a href="#inicio" class="hover:text-white transition">Inicio</a>
+          <a href="#como-funciona" class="hover:text-white transition">Cómo funciona</a>
+          <a href="#paisanos" class="hover:text-white transition">Paisanos</a>
+          <a href="#faq" class="hover:text-white transition">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function enviarEncargoWhatsApp(event) {
+      event.preventDefault();
+      try {
+        const intencion = document.getElementById('intencion').value;
+        const tipo = document.getElementById('tipo_propiedad').value;
+        const ciudad = document.getElementById('ciudad').value.trim();
+        const presupuesto = document.getElementById('presupuesto').value.trim();
+        const linea = document.getElementById('linea_contacto').value;
+
+        const numeroTelefono = (linea === 'usa') ? '19154787644' : '526562066331';
+
+        const mensaje = `Hola, Visión Inmobiliaria. Me gustaría hacer un encargo de búsqueda a la medida:\n\n` +
+          `• Objetivo: ${intencion}\n` +
+          `• Tipo de propiedad: ${tipo}\n` +
+          `• Ubicación deseada: ${ciudad}\n` +
+          `• Presupuesto estimado: ${presupuesto}\n\n` +
+          `Quedo atento a su respuesta para revisar opciones disponibles.`;
+
+        const urlWa = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
+        window.open(urlWa, '_blank', 'noopener,noreferrer');
+      } catch (err) {
+        console.error('Error al preparar el enlace de WhatsApp:', err);
+      }
+    }
+
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function toggleMobileMenu() {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (!mobileMenu.classList.contains('hidden')) {
+          toggleMobileMenu();
+        }
+      });
+    });
+
+    function toggleFaq(index) {
+      const content = document.getElementById(`faq-content-${index}`);
+      const icon = document.getElementById(`faq-icon-${index}`);
+      const btn = document.getElementById(`faq-btn-${index}`);
+      const isHidden = content.classList.contains('hidden');
+
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+      btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+  </script>
+</body>
+</html>
