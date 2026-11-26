@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Control | Visión Inmobiliaria</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23172554'/%3E%3Cg fill='none' stroke='%23fbbf24' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 29L32 13l20 16'/%3E%3Cpath d='M18 25v23a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V25'/%3E%3Cpath d='M27 51V37a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v14'/%3E%3C/g%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased selection:bg-amber-200 selection:text-blue-950">
+
+  <!-- Barra de notificación no bloqueante -->
+  <div id="toast-banner" class="fixed bottom-4 right-4 z-50 hidden max-w-md rounded-xl border px-4 py-3 text-xs sm:text-sm font-bold shadow-xl transition-all"></div>
+
+  <!-- Encabezado superior del Panel -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-blue-950 via-blue-950 to-slate-900 text-white border-b border-blue-900 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-800/90 border border-amber-400/40 flex items-center justify-center shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5M5.25 9.75V19.5A1.5 1.5 0 006.75 21h10.5a1.5 1.5 0 001.5-1.5V9.75M9.75 21v-5.25a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">
+              Panel de Control · Visión Inmobiliaria
+            </h1>
+            <span id="sync-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+              Modo Local / Sincronizable
+            </span>
+          </div>
+          <p class="text-xs text-blue-200/85">
+            Base de datos compartida con <span class="text-amber-300 font-semibold">index.html</span> y Google Sheets
+          </p>
+        </div>
+      </div>
+
+      <!-- Controles principales -->
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="index.html" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/15 text-xs font-bold transition">
+          <span>↗ Ver Portal Web</span>
+        </a>
+        <button type="button" onclick="sincronizarConSheets()"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-800 hover:bg-blue-700 text-white text-xs font-bold transition cursor-pointer">
+          <span>↻ Sincronizar</span>
+        </button>
+        <button type="button" onclick="descargarCsvActivo()"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition cursor-pointer">
+          <span>⬇ Exportar CSV</span>
+        </button>
+        <button type="button" onclick="descargarReporteResumen()"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-blue-950 text-xs font-extrabold transition cursor-pointer">
+          <span>📄 Reporte</span>
+        </button>
+        <button type="button" onclick="toggleConfigPanel()"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-amber-300/30 text-xs font-bold transition cursor-pointer">
+          <span>⚙ Base de Datos</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel desplegable para conectar Google Sheets / Apps Script -->
+    <div id="config-panel" class="hidden bg-blue-900/95 border-t border-blue-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-wider text-amber-300">
+              Conexión en Tiempo Real con Google Sheets (Visión Inmobiliaria - Base de Datos)
+            </p>
+            <p class="text-xs text-blue-100 mt-0.5">
+              Conecta la URL publicada de <code class="text-amber-200">Code.gs</code> (<code class="text-amber-200">/exec</code>) y tu PIN (<code class="text-amber-200">2026</code> por defecto) para leer y guardar directo en las pestañas <strong>Prospectos Web</strong> y <strong>Propiedades Publicadas</strong>.
+            </p>
+          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1Ku65cMPFa9kBIp_No8KsVog5_4dLi2lLITdhTFkhyEU/edit" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0 transition">
+            <span>📊 Abrir Hoja de Cálculo</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-2.5">
+          <div class="md:col-span-7">
+            <label for="gas-url-input" class="block text-[11px] font-bold text-blue-200 mb-1">URL Web App de Google Apps Script (/exec)</label>
+            <input type="url" id="gas-url-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+                   class="w-full rounded-xl border border-blue-700 bg-blue-950/80 px-3 py-2 text-xs sm:text-sm text-white placeholder-blue-400 outline-none focus:border-amber-400" />
+          </div>
+          <div class="md:col-span-2">
+            <label for="gas-pin-input" class="block text-[11px] font-bold text-blue-200 mb-1">PIN Admin</label>
+            <input type="password" id="gas-pin-input" placeholder="2026"
+                   class="w-full rounded-xl border border-blue-700 bg-blue-950/80 px-3 py-2 text-xs sm:text-sm text-white placeholder-blue-400 outline-none focus:border-amber-400" />
+          </div>
+          <div class="md:col-span-3 flex items-end gap-2">
+            <button type="button" onclick="guardarConfiguracionGas()"
+                    class="flex-1 px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-blue-950 text-xs font-extrabold transition cursor-pointer">
+              Guardar y Conectar
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-xl bg-blue-950/70 border border-blue-800 p-3 text-xs text-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <span>
+            ¿Aún no publicas el script en tu hoja? Abre tu Google Sheet → <strong>Extensiones → Apps Script</strong> → pega el archivo <code class="text-amber-300">Code.gs</code> → <strong>Implementar → Aplicación web</strong> (Acceso: Cualquier usuario).
+          </span>
+          <button type="button" onclick="copiarCodigoGas()"
+                  class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-amber-200 font-bold text-[11px] shrink-0 transition cursor-pointer">
+            📋 Copiar código Code.gs
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 6 KPIs ejecutivos alineados con las fórmulas de Google Sheets -->
+    <section aria-label="Indicadores principales" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Total Prospectos</p>
+        <p id="kpi-total-leads" class="text-2xl font-extrabold text-blue-950 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Registros totales</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-amber-200/80 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-amber-700">Nuevos</p>
+        <p id="kpi-nuevos-leads" class="text-2xl font-extrabold text-amber-600 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Pendientes de contacto</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-blue-200/80 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">En Gestión</p>
+        <p id="kpi-gestion-leads" class="text-2xl font-extrabold text-blue-700 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Búsqueda / WhatsApp</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Cerrados</p>
+        <p id="kpi-cerrados-leads" class="text-2xl font-extrabold text-slate-800 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Operaciones completas</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-emerald-200 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700">Propiedades Activas</p>
+        <p id="kpi-props-activas" class="text-2xl font-extrabold text-emerald-600 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Visibles en index.html</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+        <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">EE. UU. / México</p>
+        <p id="kpi-lineas-leads" class="text-xl font-extrabold text-blue-950 mt-1">0 / 0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Origen de solicitudes</p>
+      </div>
+    </section>
+
+    <!-- Selector de pestañas -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
+      <div class="flex flex-wrap gap-2" role="tablist">
+        <button type="button" id="tab-propiedades" onclick="cambiarPestana('propiedades')"
+                class="px-4 py-2.5 rounded-xl bg-blue-950 text-white text-xs sm:text-sm font-extrabold shadow-xs transition cursor-pointer">
+          🏠 Propiedades Publicadas (Portal Web)
+        </button>
+        <button type="button" id="tab-leads" onclick="cambiarPestana('leads')"
+                class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-bold transition cursor-pointer">
+          👥 Prospectos Web (Encargos)
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 font-medium">
+        Solo las propiedades en estado <strong class="text-emerald-700">Activa</strong> aparecen en <code class="text-blue-900 font-bold">index.html</code>.
+      </p>
+    </div>
+
+    <!-- MÓDULO 1: PROPIEDADES PUBLICADAS -->
+    <section id="section-propiedades" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Formulario para publicar / editar propiedad -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-5 border border-slate-200 shadow-xs sticky top-24">
+          <div class="flex items-center justify-between gap-2 mb-4">
+            <div>
+              <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+                Publicar en Portal Web
+              </span>
+              <h2 id="prop-form-title" class="text-lg font-extrabold text-blue-950">
+                Nueva Propiedad Disponible
+              </h2>
+            </div>
+            <button type="button" onclick="limpiarFormularioPropiedad()"
+                    class="text-xs font-bold text-slate-500 hover:text-blue-900 underline cursor-pointer">
+              Limpiar
+            </button>
+          </div>
+
+          <form id="propiedad-form" onsubmit="guardarPropiedad(event)" class="space-y-3">
+            <input type="hidden" id="prop-id-hidden" />
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="prop-id-display" class="block text-xs font-bold text-slate-700 mb-1">ID Propiedad</label>
+                <input type="text" id="prop-id-display" placeholder="Auto (ej. PROP-2026-101)"
+                       class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 focus:bg-white focus:border-blue-800 outline-none" />
+              </div>
+              <div>
+                <label for="prop-estatus" class="block text-xs font-bold text-slate-700 mb-1">Estado Publicación</label>
+                <select id="prop-estatus"
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-extrabold text-blue-950 focus:bg-white focus:border-blue-800 outline-none">
+                  <option value="Activa">Activa (Visible en web)</option>
+                  <option value="Apartada">Apartada (Oculta)</option>
+                  <option value="Pausada">Pausada (Oculta)</option>
+                  <option value="Vendida / Rentada">Vendida / Rentada</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="prop-titulo" class="block text-xs font-bold text-slate-700 mb-1">Título / Resumen</label>
+              <input type="text" id="prop-titulo" required placeholder="Ej. Residencia moderna en fraccionamiento privado"
+                     class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="prop-operacion" class="block text-xs font-bold text-slate-700 mb-1">Operación</label>
+                <select id="prop-operacion"
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold focus:bg-white focus:border-blue-800 outline-none">
+                  <option value="Venta">Venta</option>
+                  <option value="Renta">Renta</option>
+                  <option value="Inversión">Inversión</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="prop-tipo" class="block text-xs font-bold text-slate-700 mb-1">Tipo de Propiedad</label>
+                <select id="prop-tipo"
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold focus:bg-white focus:border-blue-800 outline-none">
+                  <option value="Casa">Casa</option>
+                  <option value="Departamento">Departamento</option>
+                  <option value="Terreno / Lote">Terreno / Lote</option>
+                  <option value="Local / Bodega">Local / Bodega</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="prop-ciudad" class="block text-xs font-bold text-slate-700 mb-1">Ciudad / Estado (México)</label>
+              <input type="text" id="prop-ciudad" required placeholder="Ej. Ciudad Juárez, Chihuahua"
+                     class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="prop-precio" class="block text-xs font-bold text-slate-700 mb-1">Precio (MXN / USD)</label>
+                <input type="number" id="prop-precio" required min="0" step="any" placeholder="4250000"
+                       class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none" />
+              </div>
+              <div>
+                <label for="prop-agente" class="block text-xs font-bold text-slate-700 mb-1">Agente</label>
+                <input type="text" id="prop-agente" value="Josué Peña" placeholder="Josué Peña"
+                       class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label for="prop-imagen" class="block text-xs font-bold text-slate-700 mb-1">URL Imagen (opcional)</label>
+              <input type="url" id="prop-imagen" oninput="actualizarVistaPreviaImagen()" placeholder="https://images.unsplash.com/..."
+                     class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none" />
+              <div id="prop-img-preview-box" class="hidden mt-2 rounded-xl overflow-hidden border border-slate-200 h-28 bg-slate-100">
+                <img id="prop-img-preview" src="" alt="Vista previa" class="w-full h-full object-cover" />
+              </div>
+            </div>
+
+            <div>
+              <label for="prop-caracteristicas" class="block text-xs font-bold text-slate-700 mb-1">Características Clave</label>
+              <textarea id="prop-caracteristicas" rows="3" placeholder="Ej. 3 recámaras, 2.5 baños, cocina integral de granito, cochera 2 autos..."
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm focus:bg-white focus:border-blue-800 outline-none"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full py-2.5 px-4 rounded-xl bg-blue-950 hover:bg-blue-900 text-white text-xs sm:text-sm font-extrabold shadow-sm transition cursor-pointer">
+              Guardar y Publicar Propiedad
+            </button>
+          </form>
+        </div>
+
+        <!-- Inventario + Vista previa del portal -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="text-lg font-extrabold text-blue-950">Inventario en Base de Datos</h2>
+                <p class="text-xs text-slate-500">Pestaña: <strong>Propiedades Publicadas</strong></p>
+              </div>
+              <div class="flex items-center gap-2">
+                <select id="prop-filter-estatus" onchange="renderizarPropiedades()"
+                        class="rounded-xl border border-slate-300 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700 outline-none">
+                  <option value="Todos">Todos los estados</option>
+                  <option value="Activa">Solo Activas</option>
+                  <option value="Apartada">Apartadas</option>
+                  <option value="Pausada">Pausadas</option>
+                  <option value="Vendida / Rentada">Vendidas / Rentadas</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="props-list" class="space-y-3"></div>
+          </div>
+
+          <!-- Vista previa en vivo de index.html -->
+          <div class="bg-white rounded-2xl p-5 border border-emerald-200 shadow-xs space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                  Vista Pública en index.html
+                </span>
+                <h3 class="text-base font-extrabold text-blue-950 mt-1">
+                  Propiedades visibles actualmente para tus clientes
+                </h3>
+              </div>
+              <span id="public-props-count" class="text-xs font-extrabold text-emerald-700">0 activas</span>
+            </div>
+
+            <div id="public-props-preview" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MÓDULO 2: PROSPECTOS WEB -->
+    <section id="section-leads" class="hidden space-y-4">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
+          <div class="lg:col-span-4">
+            <label for="lead-search" class="sr-only">Buscar prospecto</label>
+            <input type="search" id="lead-search" oninput="renderizarLeads()"
+                   placeholder="Buscar por nombre, folio, ciudad, teléfono o asesor..."
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-blue-800 outline-none" />
+          </div>
+
+          <div class="lg:col-span-2">
+            <label for="lead-filter-estado" class="sr-only">Filtrar por estado</label>
+            <select id="lead-filter-estado" onchange="renderizarLeads()"
+                    class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:bg-white focus:border-blue-800 outline-none">
+              <option value="Todos">Todos los estados</option>
+              <option value="Nuevo">Nuevo</option>
+              <option value="En búsqueda">En búsqueda</option>
+              <option value="Opciones enviadas">Opciones enviadas</option>
+              <option value="Seguimiento WhatsApp">Seguimiento WhatsApp</option>
+              <option value="Cerrado">Cerrado</option>
+            </select>
+          </div>
+
+          <div class="lg:col-span-2">
+            <label for="lead-filter-linea" class="sr-only">Filtrar por origen</label>
+            <select id="lead-filter-linea" onchange="renderizarLeads()"
+                    class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:bg-white focus:border-blue-800 outline-none">
+              <option value="Todas">Todas las líneas</option>
+              <option value="EE. UU.">EE. UU.</option>
+              <option value="México">México</option>
+            </select>
+          </div>
+
+          <div class="lg:col-span-2">
+            <label for="lead-filter-objetivo" class="sr-only">Filtrar por objetivo</label>
+            <select id="lead-filter-objetivo" onchange="renderizarLeads()"
+                    class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:bg-white focus:border-blue-800 outline-none">
+              <option value="Todos">Todos los objetivos</option>
+              <option value="Comprar hogar">Comprar hogar</option>
+              <option value="Rentar propiedad">Rentar propiedad</option>
+              <option value="Invertir en inmuebles">Invertir en inmuebles</option>
+              <option value="Retorno a México desde EE. UU.">Retorno desde EE. UU.</option>
+            </select>
+          </div>
+
+          <div class="lg:col-span-2 flex items-center justify-between lg:justify-end gap-2">
+            <span id="leads-visible-count" class="text-xs font-bold text-slate-500">0 registros</span>
+            <button type="button" onclick="abrirModalNuevoLead()"
+                    class="px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-white text-xs font-bold transition cursor-pointer shrink-0">
+              + Nuevo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[1040px]">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                <th class="py-3 px-3.5">Folio / Fecha</th>
+                <th class="py-3 px-3.5">Cliente</th>
+                <th class="py-3 px-3.5">Objetivo / Tipo</th>
+                <th class="py-3 px-3.5">Ciudad / Presupuesto</th>
+                <th class="py-3 px-3.5">Origen / Línea</th>
+                <th class="py-3 px-3.5">Detalles / Requerimientos</th>
+                <th class="py-3 px-3.5">Estado / Asesor</th>
+                <th class="py-3 px-3.5 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="leads-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
+          </table>
+        </div>
+        <div id="leads-empty" class="hidden text-center py-10 px-4 text-slate-500 text-sm">
+          No hay prospectos que coincidan con los filtros actuales.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal para agregar prospecto manual -->
+  <div id="modal-nuevo-lead" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden">
+      <div class="bg-blue-950 text-white px-5 py-3.5 flex items-center justify-between">
+        <h3 class="text-base font-extrabold">Registrar Nuevo Prospecto</h3>
+        <button type="button" onclick="cerrarModalNuevoLead()" class="text-blue-200 hover:text-white text-sm font-bold cursor-pointer">✕</button>
+      </div>
+      <form id="nuevo-lead-form" onsubmit="crearLeadManual(event)" class="p-5 space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="nl-nombre" class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo</label>
+            <input type="text" id="nl-nombre" required placeholder="Ej. Ana Laura Reyes"
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+          <div>
+            <label for="nl-telefono" class="block text-xs font-bold text-slate-700 mb-1">Teléfono / WhatsApp</label>
+            <input type="tel" id="nl-telefono" required placeholder="+1 (915) 555-0144"
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="nl-objetivo" class="block text-xs font-bold text-slate-700 mb-1">Objetivo / Intención</label>
+            <select id="nl-objetivo" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold outline-none focus:border-blue-800">
+              <option value="Comprar hogar">Comprar hogar</option>
+              <option value="Rentar propiedad">Rentar propiedad</option>
+              <option value="Invertir en inmuebles">Invertir en inmuebles</option>
+              <option value="Retorno a México desde EE. UU.">Retorno a México desde EE. UU.</option>
+            </select>
+          </div>
+          <div>
+            <label for="nl-tipo" class="block text-xs font-bold text-slate-700 mb-1">Tipo de Propiedad</label>
+            <select id="nl-tipo" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold outline-none focus:border-blue-800">
+              <option value="Casa">Casa</option>
+              <option value="Departamento">Departamento</option>
+              <option value="Terreno / Lote">Terreno / Lote</option>
+              <option value="Local / Bodega">Local / Bodega</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label for="nl-ciudad" class="block text-xs font-bold text-slate-700 mb-1">Ciudad / Estado</label>
+            <input type="text" id="nl-ciudad" required placeholder="Guadalajara, Jalisco"
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+          <div>
+            <label for="nl-presupuesto" class="block text-xs font-bold text-slate-700 mb-1">Presupuesto</label>
+            <input type="text" id="nl-presupuesto" required placeholder="$2,400,000.00"
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+          <div>
+            <label for="nl-linea" class="block text-xs font-bold text-slate-700 mb-1">Origen / Línea</label>
+            <select id="nl-linea" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-semibold outline-none focus:border-blue-800">
+              <option value="EE. UU. (+1 915 478 7644)">EE. UU. (+1 915 478 7644)</option>
+              <option value="México (+52 656 206 6331)">México (+52 656 206 6331)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2">
+            <label for="nl-detalles" class="block text-xs font-bold text-slate-700 mb-1">Detalles / Requerimientos</label>
+            <input type="text" id="nl-detalles" placeholder="Ej. Prefiere zona tranquila con parques..."
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+          <div>
+            <label for="nl-asesor" class="block text-xs font-bold text-slate-700 mb-1">Asesor</label>
+            <input type="text" id="nl-asesor" value="Josué Peña"
+                   class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs sm:text-sm outline-none focus:border-blue-800" />
+          </div>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="cerrarModalNuevoLead()"
+                  class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold cursor-pointer">
+            Guardar Prospecto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Si ya desplegaste Code.gs como Web App, puedes pegar la URL (/exec)
+     * en DEFAULT_GAS_URL o configurarla desde el botón "⚙ Base de Datos".
+     */
+    const DEFAULT_GAS_URL = '';
+
+    const SHARED_GAS_URL_KEY = 'vi_shared_gas_url_v2';
+    const SHARED_PROPS_KEY = 'vi_shared_props_v2';
+    const SHARED_LEADS_KEY = 'vi_shared_leads_v2';
+    const ADMIN_PIN_KEY = 'vi_admin_pin_v2';
+
+    // Datos iniciales fieles a las dos pestañas de tu Google Sheet
+    const DEFAULT_LEADS = [
+      {
+        folio: 'VI-2025-001 [EJEMPLO]',
+        fechaHora: '2025-02-18 10:30',
+        nombre: 'Carlos Mendoza Rivas',
+        telefono: '+1 (915) 329-8471',
+        origenLinea: 'EE. UU. (+1 915 478 7644)',
+        objetivo: 'Retorno a México desde EE. UU.',
+        tipoPropiedad: 'Casa',
+        ciudad: 'Ciudad Juárez, Chihuahua',
+        presupuesto: '$3,200,000.00',
+        detalles: 'Busca casa de 3 recámaras en fraccionamiento privado cerca de puente internacional Córdova-Américas.',
+        estado: 'Nuevo',
+        asesor: 'Josué Peña'
+      },
+      {
+        folio: 'VI-2025-002 [EJEMPLO]',
+        fechaHora: '2025-02-18 14:15',
+        nombre: 'Dra. Mariana Garza',
+        telefono: '+52 (656) 198-4320',
+        origenLinea: 'México (+52 656 206 6331)',
+        objetivo: 'Invertir en inmuebles',
+        tipoPropiedad: 'Departamento',
+        ciudad: 'Zapopan, Jalisco',
+        presupuesto: '$4,500,000.00',
+        detalles: 'Preventa con amenidades para renta en Airbnb; 2 recámaras y cajón de estacionamiento.',
+        estado: 'En búsqueda',
+        asesor: 'Josué Peña'
+      },
+      {
+        folio: 'VI-2025-003 [EJEMPLO]',
+        fechaHora: '2025-02-19 09:45',
+        nombre: 'Roberto & Elena Morales',
+        telefono: '+1 (915) 512-9903',
+        origenLinea: 'EE. UU. (+1 915 478 7644)',
+        objetivo: 'Comprar hogar',
+        tipoPropiedad: 'Casa',
+        ciudad: 'Querétaro, Querétaro',
+        presupuesto: '$5,800,000.00',
+        detalles: 'Casa en privada en Zibatá, 3 recámaras, amplio jardín para mascotas y seguridad 24/7.',
+        estado: 'Opciones enviadas',
+        asesor: 'Josué Peña'
+      },
+      {
+        folio: 'VI-2025-004 [EJEMPLO]',
+        fechaHora: '2025-02-19 16:20',
+        nombre: 'Ing. Alejandro Solís',
+        telefono: '+52 (656) 438-1290',
+        origenLinea: 'México (+52 656 206 6331)',
+        objetivo: 'Rentar propiedad',
+        tipoPropiedad: 'Local / Bodega',
+        ciudad: 'Chihuahua, Chihuahua',
+        presupuesto: '$45,000.00',
+        detalles: 'Local comercial sobre vialidad principal, mín. 180 m² con área de maniobras y estacionamiento.',
+        estado: 'Seguimiento WhatsApp',
+        asesor: 'Josué Peña'
+      },
+      {
+        folio: 'VI-2025-005 [EJEMPLO]',
+        fechaHora: '2025-02-20 11:10',
+        nombre: 'Claudia Villarreal Gómez',
+        telefono: '+1 (915) 674-3215',
+        origenLinea: 'EE. UU. (+1 915 478 7644)',
+        objetivo: 'Invertir en inmuebles',
+        tipoPropiedad: 'Terreno / Lote',
+        ciudad: 'Mérida, Yucatán',
+        presupuesto: '$1,750,000.00',
+        detalles: 'Terreno residencial 100% urbanizado en privada norte de Mérida con casa club y certeza jurídica.',
+        estado: 'Cerrado',
+        asesor: 'Josué Peña'
+      }
+    ];
+
+    const DEFAULT_PROPS = [
+      {
+        idPropiedad: 'PROP-2025-001 [EJEMPLO]',
+        fechaPublicacion: '2025-02-18',
+        titulo: 'Residencia Moderna en Fraccionamiento Privado Rincones de San Marcos',
+        operacion: 'Venta',
+        tipoPropiedad: 'Casa',
+        ciudad: 'Ciudad Juárez, Chihuahua',
+        precio: 4250000,
+        precioTexto: '$4,250,000',
+        caracteristicas: '3 recámaras, 2.5 baños, cocina integral de granito, estancia, cochera para 2 autos y patio.',
+        estadoPublicacion: 'Activa',
+        agente: 'Josué Peña',
+        urlImagen: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        idPropiedad: 'PROP-2025-002 [EJEMPLO]',
+        fechaPublicacion: '2025-02-19',
+        titulo: 'Departamento de Lujo en Torre Residencial con Amenidades Premium',
+        operacion: 'Inversión',
+        tipoPropiedad: 'Departamento',
+        ciudad: 'Zapopan, Jalisco',
+        precio: 3890000,
+        precioTexto: '$3,890,000',
+        caracteristicas: '2 recámaras, 2 baños completos, balcón panorámico, bodega, 1 estacionamiento; alberca y gym.',
+        estadoPublicacion: 'Activa',
+        agente: 'Josué Peña',
+        urlImagen: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80'
+      }
+    ];
+
+    let leadsState = [];
+    let propsState = [];
+    let activeTab = 'propiedades';
+    let pendingDeletePropId = null;
+    let pendingDeleteLeadFolio = null;
+
+    function getGasUrl() {
+      const stored = (localStorage.getItem(SHARED_GAS_URL_KEY) || '').trim();
+      return stored || DEFAULT_GAS_URL.trim();
+    }
+
+    function getAdminPin() {
+      return (localStorage.getItem(ADMIN_PIN_KEY) || '2026').trim();
+    }
+
+    function mostrarToast(mensaje, tipo = 'ok') {
+      const toast = document.getElementById('toast-banner');
+      if (!toast) return;
+      toast.textContent = mensaje;
+      toast.className = 'fixed bottom-4 right-4 z-50 max-w-md rounded-xl border px-4 py-3 text-xs sm:text-sm font-bold shadow-xl transition-all ' +
+        (tipo === 'error'
+          ? 'bg-rose-950 text-rose-100 border-rose-700'
+          : 'bg-blue-950 text-white border-amber-400/50');
+      toast.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.add('hidden'), 3800);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getFallbackImageByType(tipo) {
+      const t = String(tipo || '').toLowerCase();
+      if (t.includes('departamento')) return 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80';
+      if (t.includes('terreno') || t.includes('lote')) return 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80';
+      if (t.includes('local') || t.includes('bodega')) return 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80';
+      return 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80';
+    }
+
+    function resolverImagenPropiedad(p) {
+      const url = String(p.urlImagen || '').trim();
+      if (url && /^https?:\/\//i.test(url) && !url.includes('visioninmobiliaria.mx/img/')) {
+        return url;
+      }
+      return getFallbackImageByType(p.tipoPropiedad);
+    }
+
+    function cargarEstadoInicial() {
+      try {
+        const rawLeads = localStorage.getItem(SHARED_LEADS_KEY);
+        leadsState = rawLeads ? JSON.parse(rawLeads) : DEFAULT_LEADS.slice();
+        if (!Array.isArray(leadsState) || leadsState.length === 0) leadsState = DEFAULT_LEADS.slice();
+      } catch (e) {
+        leadsState = DEFAULT_LEADS.slice();
+      }
+
+      try {
+        const rawProps = localStorage.getItem(SHARED_PROPS_KEY);
+        propsState = rawProps ? JSON.parse(rawProps) : DEFAULT_PROPS.slice();
+        if (!Array.isArray(propsState) || propsState.length === 0) propsState = DEFAULT_PROPS.slice();
+      } catch (e) {
+        propsState = DEFAULT_PROPS.slice();
+      }
+
+      document.getElementById('gas-url-input').value = getGasUrl();
+      document.getElementById('gas-pin-input').value = localStorage.getItem(ADMIN_PIN_KEY) || '';
+
+      actualizarBadgeConexion();
+      guardarCacheLocal();
+      renderizarTodo();
+
+      if (getGasUrl()) {
+        sincronizarConSheets(true);
+      }
+    }
+
+    function guardarCacheLocal() {
+      try {
+        localStorage.setItem(SHARED_LEADS_KEY, JSON.stringify(leadsState));
+        localStorage.setItem(SHARED_PROPS_KEY, JSON.stringify(propsState));
+      } catch (e) {
+        console.error('Error guardando caché local:', e);
+      }
+    }
+
+    function actualizarBadgeConexion(conectado = null) {
+      const url = getGasUrl();
+      const badge = document.getElementById('sync-badge');
+      const isOnline = conectado === true || Boolean(url);
+      if (isOnline && conectado !== false) {
+        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/35';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Google Sheets Conectado';
+      } else {
+        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>Modo Local (Conecta /exec)';
+      }
+    }
+
+    function toggleConfigPanel() {
+      document.getElementById('config-panel').classList.toggle('hidden');
+    }
+
+    function guardarConfiguracionGas() {
+      const url = document.getElementById('gas-url-input').value.trim();
+      const pin = document.getElementById('gas-pin-input').value.trim();
+
+      if (url) localStorage.setItem(SHARED_GAS_URL_KEY, url);
+      else localStorage.removeItem(SHARED_GAS_URL_KEY);
+
+      if (pin) localStorage.setItem(ADMIN_PIN_KEY, pin);
+      else localStorage.removeItem(ADMIN_PIN_KEY);
+
+      actualizarBadgeConexion();
+      if (url) {
+        sincronizarConSheets(false);
+      } else {
+        mostrarToast('URL eliminada. Trabajando en modo local compartido con index.html.');
+      }
+    }
+
+    async function ejecutarAccionGas(postPayload) {
+      const url = getGasUrl();
+      const pin = getAdminPin();
+      if (!url) return { offline: true };
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(Object.assign({}, postPayload, { pin }))
+        });
+        return await res.json();
+      } catch (err) {
+        console.warn('Error llamando a Google Apps Script:', err);
+        return { ok: false, error: err.message || 'Error de red' };
+      }
+    }
+
+    async function sincronizarConSheets(silencioso = false) {
+      const url = getGasUrl();
+      const pin = getAdminPin();
+
+      if (!url) {
+        renderizarTodo();
+        if (!silencioso) {
+          mostrarToast('Mostrando datos locales. Abre "⚙ Base de Datos" para conectar Google Sheets.');
+        }
+        return;
+      }
+
+      try {
+        const res = await fetch(`${url}?action=getAdminData&pin=${encodeURIComponent(pin)}`);
+        const data = await res.json();
+        if (!data || !data.ok) {
+          throw new Error((data && data.error) || 'No se pudo leer la hoja de cálculo.');
+        }
+        if (Array.isArray(data.leads)) leadsState = data.leads;
+        if (Array.isArray(data.properties)) propsState = data.properties;
+        guardarCacheLocal();
+        actualizarBadgeConexion(true);
+        renderizarTodo();
+        if (!silencioso) mostrarToast('✓ Sincronizado en vivo con Google Sheets.');
+      } catch (err) {
+        actualizarBadgeConexion(false);
+        renderizarTodo();
+        if (!silencioso) mostrarToast('Error de sincronización: ' + err.message, 'error');
+      }
+    }
+
+    function cambiarPestana(tab) {
+      activeTab = tab;
+      const secLeads = document.getElementById('section-leads');
+      const secProps = document.getElementById('section-propiedades');
+      const tabLeads = document.getElementById('tab-leads');
+      const tabProps = document.getElementById('tab-propiedades');
+
+      if (tab === 'leads') {
+        secLeads.classList.remove('hidden');
+        secProps.classList.add('hidden');
+        tabLeads.className = 'px-4 py-2.5 rounded-xl bg-blue-950 text-white text-xs sm:text-sm font-extrabold shadow-xs transition cursor-pointer';
+        tabProps.className = 'px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-bold transition cursor-pointer';
+      } else {
+        secLeads.classList.add('hidden');
+        secProps.classList.remove('hidden');
+        tabProps.className = 'px-4 py-2.5 rounded-xl bg-blue-950 text-white text-xs sm:text-sm font-extrabold shadow-xs transition cursor-pointer';
+        tabLeads.className = 'px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-bold transition cursor-pointer';
+      }
+    }
+
+    function actualizarKPIs() {
+      const total = leadsState.length;
+      const nuevos = leadsState.filter(l => String(l.estado || '').toLowerCase() === 'nuevo').length;
+      const enGestion = leadsState.filter(l => {
+        const s = String(l.estado || '').toLowerCase();
+        return s === 'en búsqueda' || s === 'opciones enviadas' || s === 'seguimiento whatsapp';
+      }).length;
+      const cerrados = leadsState.filter(l => String(l.estado || '').toLowerCase() === 'cerrado').length;
+
+      const usa = leadsState.filter(l => String(l.origenLinea || '').includes('EE. UU.')).length;
+      const mx = leadsState.filter(l => String(l.origenLinea || '').toLowerCase().includes('méx') || String(l.origenLinea || '').toLowerCase().includes('mex')).length;
+      const activas = propsState.filter(p => {
+        const st = String(p.estadoPublicacion || '').trim().toLowerCase();
+        return st === 'activa' || st === 'disponible';
+      }).length;
+
+      document.getElementById('kpi-total-leads').textContent = total;
+      document.getElementById('kpi-nuevos-leads').textContent = nuevos;
+      document.getElementById('kpi-gestion-leads').textContent = enGestion;
+      document.getElementById('kpi-cerrados-leads').textContent = cerrados;
+      document.getElementById('kpi-props-activas').textContent = activas;
+      document.getElementById('kpi-lineas-leads').textContent = `${usa} / ${mx}`;
+    }
+
+    function obtenerLeadsFiltrados() {
+      const q = (document.getElementById('lead-search').value || '').trim().toLowerCase();
+      const estado = document.getElementById('lead-filter-estado').value;
+      const linea = document.getElementById('lead-filter-linea').value;
+      const objetivo = document.getElementById('lead-filter-objetivo').value;
+
+      return leadsState.filter(item => {
+        const matchEstado = estado === 'Todos' || item.estado === estado;
+        const matchLinea = linea === 'Todas' || String(item.origenLinea || '').includes(linea);
+        const matchObjetivo = objetivo === 'Todos' || item.objetivo === objetivo;
+        const texto = `${item.folio} ${item.fechaHora} ${item.nombre} ${item.telefono} ${item.ciudad} ${item.objetivo} ${item.tipoPropiedad} ${item.presupuesto} ${item.detalles} ${item.asesor}`.toLowerCase();
+        const matchQuery = !q || texto.includes(q);
+        return matchEstado && matchLinea && matchObjetivo && matchQuery;
+      });
+    }
+
+    function renderizarLeads() {
+      const filtrados = obtenerLeadsFiltrados();
+      const tbody = document.getElementById('leads-table-body');
+      const empty = document.getElementById('leads-empty');
+      document.getElementById('leads-visible-count').textContent = `${filtrados.length} registro${filtrados.length === 1 ? '' : 's'}`;
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      tbody.innerHTML = filtrados.map((lead, idx) => {
+        const telLimpio = String(lead.telefono || '').replace(/\D/g, '');
+        const msg = encodeURIComponent(`Hola ${lead.nombre || ''}, te contactamos de Visión Inmobiliaria sobre tu solicitud (${lead.folio}) de ${lead.tipoPropiedad || 'propiedad'} en ${lead.ciudad || 'México'}.`);
+        const waHref = telLimpio ? `https://wa.me/${telLimpio}?text=${msg}` : '#';
+        const folioAttr = escapeHtml(lead.folio);
+        const isUsa = String(lead.origenLinea || '').includes('EE.');
+        const isConfirming = pendingDeleteLeadFolio === lead.folio;
+
+        return `
+          <tr class="hover:bg-slate-50/80 align-top">
+            <td class="py-3 px-3.5 whitespace-nowrap">
+              <span class="block font-extrabold text-blue-950 text-xs">${escapeHtml(lead.folio)}</span>
+              <span class="block text-[11px] text-slate-500 mt-0.5">${escapeHtml(lead.fechaHora)}</span>
+            </td>
+            <td class="py-3 px-3.5">
+              <span class="block font-bold text-slate-900">${escapeHtml(lead.nombre)}</span>
+              <span class="block text-xs text-slate-600">${escapeHtml(lead.telefono)}</span>
+            </td>
+            <td class="py-3 px-3.5">
+              <span class="block font-semibold text-blue-900">${escapeHtml(lead.objetivo)}</span>
+              <span class="inline-block mt-0.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-bold">${escapeHtml(lead.tipoPropiedad)}</span>
+            </td>
+            <td class="py-3 px-3.5">
+              <span class="block font-bold text-slate-800">${escapeHtml(lead.ciudad)}</span>
+              <span class="block text-xs font-extrabold text-emerald-700">${escapeHtml(lead.presupuesto)}</span>
+            </td>
+            <td class="py-3 px-3.5 whitespace-nowrap">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold ${isUsa ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'}">
+                ${isUsa ? 'EE. UU.' : 'México'}
+              </span>
+            </td>
+            <td class="py-3 px-3.5 min-w-[230px]">
+              <textarea id="detalles-input-${idx}" rows="2"
+                        class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-800 focus:bg-white focus:border-blue-800 outline-none">${escapeHtml(lead.detalles)}</textarea>
+            </td>
+            <td class="py-3 px-3.5 whitespace-nowrap space-y-1.5">
+              <select aria-label="Estado de ${escapeHtml(lead.nombre)}"
+                      onchange="actualizarLeadEnVivo('${folioAttr}', this.value, null, null)"
+                      class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-bold text-slate-800 outline-none focus:border-blue-800">
+                <option value="Nuevo" ${lead.estado === 'Nuevo' ? 'selected' : ''}>Nuevo</option>
+                <option value="En búsqueda" ${lead.estado === 'En búsqueda' ? 'selected' : ''}>En búsqueda</option>
+                <option value="Opciones enviadas" ${lead.estado === 'Opciones enviadas' ? 'selected' : ''}>Opciones enviadas</option>
+                <option value="Seguimiento WhatsApp" ${lead.estado === 'Seguimiento WhatsApp' ? 'selected' : ''}>Seguimiento WhatsApp</option>
+                <option value="Cerrado" ${lead.estado === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
+              </select>
+              <input type="text" id="asesor-input-${idx}" value="${escapeHtml(lead.asesor || 'Josué Peña')}"
+                     placeholder="Asesor..."
+                     class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-[11px] font-semibold text-slate-700 focus:bg-white focus:border-blue-800 outline-none" />
+            </td>
+            <td class="py-3 px-3.5 whitespace-nowrap text-right">
+              <div class="flex flex-col items-end gap-1.5">
+                <div class="flex items-center gap-1.5">
+                  <button type="button"
+                          onclick="actualizarLeadEnVivo('${folioAttr}', null, document.getElementById('detalles-input-${idx}').value, document.getElementById('asesor-input-${idx}').value)"
+                          class="px-2.5 py-1 rounded-lg bg-blue-950 hover:bg-blue-900 text-white text-[11px] font-bold transition cursor-pointer">
+                    Guardar
+                  </button>
+                  ${telLimpio ? `
+                    <a href="${waHref}" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition">
+                      WhatsApp
+                    </a>
+                  ` : ''}
+                </div>
+                <button type="button" onclick="eliminarLead('${folioAttr}')"
+                        class="px-2 py-0.5 rounded-lg ${isConfirming ? 'bg-rose-600 text-white' : 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'} text-[11px] font-bold transition cursor-pointer">
+                  ${isConfirming ? 'Confirmar borrar' : 'Borrar'}
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function actualizarLeadEnVivo(folio, nuevoEstado, detalles, asesor) {
+      const idx = leadsState.findIndex(l => l.folio === folio);
+      if (idx === -1) return;
+
+      if (nuevoEstado !== null) leadsState[idx].estado = nuevoEstado;
+      if (detalles !== null) leadsState[idx].detalles = detalles;
+      if (asesor !== null) leadsState[idx].asesor = asesor;
+
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarLeads();
+
+      const resp = await ejecutarAccionGas({
+        action: 'updateLead',
+        folio: folio,
+        estado: leadsState[idx].estado,
+        detalles: leadsState[idx].detalles,
+        asesor: leadsState[idx].asesor
+      });
+
+      if (resp && resp.offline) {
+        mostrarToast('✓ Prospecto actualizado en almacenamiento local.');
+      } else if (resp && resp.ok) {
+        mostrarToast('✓ Prospecto actualizado en Google Sheets.');
+      } else {
+        mostrarToast('Guardado local; error en Sheets: ' + ((resp && resp.error) || 'red'), 'error');
+      }
+    }
+
+    async function eliminarLead(folio) {
+      if (pendingDeleteLeadFolio !== folio) {
+        pendingDeleteLeadFolio = folio;
+        renderizarLeads();
+        mostrarToast('Haz clic de nuevo en "Confirmar borrar" para eliminar este prospecto.', 'error');
+        return;
+      }
+
+      pendingDeleteLeadFolio = null;
+      leadsState = leadsState.filter(l => l.folio !== folio);
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarLeads();
+
+      const resp = await ejecutarAccionGas({ action: 'deleteLead', folio: folio });
+      if (resp && resp.ok) {
+        mostrarToast('✓ Prospecto eliminado de Google Sheets.');
+      } else {
+        mostrarToast('✓ Prospecto eliminado localmente.');
+      }
+    }
+
+    function abrirModalNuevoLead() {
+      document.getElementById('modal-nuevo-lead').classList.remove('hidden');
+    }
+
+    function cerrarModalNuevoLead() {
+      document.getElementById('modal-nuevo-lead').classList.add('hidden');
+      document.getElementById('nuevo-lead-form').reset();
+    }
+
+    async function crearLeadManual(event) {
+      event.preventDefault();
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const fechaFmt = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      const folio = `VI-${d.getFullYear()}-${Math.floor(100 + Math.random() * 900)}`;
+
+      const nuevo = {
+        folio: folio,
+        fechaHora: fechaFmt,
+        nombre: document.getElementById('nl-nombre').value.trim(),
+        telefono: document.getElementById('nl-telefono').value.trim(),
+        origenLinea: document.getElementById('nl-linea').value,
+        objetivo: document.getElementById('nl-objetivo').value,
+        tipoPropiedad: document.getElementById('nl-tipo').value,
+        ciudad: document.getElementById('nl-ciudad').value.trim(),
+        presupuesto: document.getElementById('nl-presupuesto').value.trim(),
+        detalles: document.getElementById('nl-detalles').value.trim(),
+        estado: 'Nuevo',
+        asesor: document.getElementById('nl-asesor').value.trim() || 'Josué Peña'
+      };
+
+      leadsState.unshift(nuevo);
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarLeads();
+      cerrarModalNuevoLead();
+
+      const resp = await ejecutarAccionGas({ action: 'createLead', lead: nuevo });
+      if (resp && resp.ok) {
+        mostrarToast(`✓ Prospecto ${folio} guardado en Google Sheets.`);
+      } else {
+        mostrarToast(`✓ Prospecto ${folio} guardado localmente.`);
+      }
+    }
+
+    function actualizarVistaPreviaImagen() {
+      const url = document.getElementById('prop-imagen').value.trim();
+      const box = document.getElementById('prop-img-preview-box');
+      const img = document.getElementById('prop-img-preview');
+      if (url && /^https?:\/\//i.test(url)) {
+        img.src = url;
+        box.classList.remove('hidden');
+      } else {
+        box.classList.add('hidden');
+      }
+    }
+
+    function limpiarFormularioPropiedad() {
+      document.getElementById('prop-id-hidden').value = '';
+      document.getElementById('propiedad-form').reset();
+      document.getElementById('prop-agente').value = 'Josué Peña';
+      document.getElementById('prop-img-preview-box').classList.add('hidden');
+      document.getElementById('prop-form-title').textContent = 'Nueva Propiedad Disponible';
+      pendingDeletePropId = null;
+    }
+
+    function editarPropiedad(idProp) {
+      const prop = propsState.find(p => p.idPropiedad === idProp);
+      if (!prop) return;
+
+      document.getElementById('prop-id-hidden').value = prop.idPropiedad;
+      document.getElementById('prop-id-display').value = prop.idPropiedad;
+      document.getElementById('prop-titulo').value = prop.titulo || '';
+      document.getElementById('prop-operacion').value = prop.operacion || 'Venta';
+      document.getElementById('prop-tipo').value = prop.tipoPropiedad || 'Casa';
+      document.getElementById('prop-ciudad').value = prop.ciudad || '';
+      document.getElementById('prop-precio').value = prop.precio || 0;
+      document.getElementById('prop-estatus').value = prop.estadoPublicacion || 'Activa';
+      document.getElementById('prop-agente').value = prop.agente || 'Josué Peña';
+      document.getElementById('prop-imagen').value = prop.urlImagen || '';
+      document.getElementById('prop-caracteristicas').value = prop.caracteristicas || '';
+      document.getElementById('prop-form-title').textContent = `Editando (${prop.idPropiedad})`;
+      actualizarVistaPreviaImagen();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function guardarPropiedad(event) {
+      event.preventDefault();
+      const hiddenId = document.getElementById('prop-id-hidden').value.trim();
+      const customId = document.getElementById('prop-id-display').value.trim();
+      const idProp = hiddenId || customId || (`PROP-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`);
+      const precioNum = Number(document.getElementById('prop-precio').value || 0);
+
+      const propData = {
+        idPropiedad: idProp,
+        fechaPublicacion: new Date().toISOString().slice(0, 10),
+        titulo: document.getElementById('prop-titulo').value.trim(),
+        operacion: document.getElementById('prop-operacion').value,
+        tipoPropiedad: document.getElementById('prop-tipo').value,
+        ciudad: document.getElementById('prop-ciudad').value.trim(),
+        precio: precioNum,
+        precioTexto: precioNum > 0 ? ('$' + precioNum.toLocaleString('es-MX')) : 'Consultar',
+        caracteristicas: document.getElementById('prop-caracteristicas').value.trim(),
+        estadoPublicacion: document.getElementById('prop-estatus').value,
+        agente: document.getElementById('prop-agente').value.trim() || 'Josué Peña',
+        urlImagen: document.getElementById('prop-imagen').value.trim()
+      };
+
+      const idx = propsState.findIndex(p => p.idPropiedad === idProp);
+      if (idx !== -1) {
+        propsState[idx] = Object.assign({}, propsState[idx], propData);
+      } else {
+        propsState.unshift(propData);
+      }
+
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarPropiedades();
+      limpiarFormularioPropiedad();
+
+      const resp = await ejecutarAccionGas({ action: 'saveProperty', property: propData });
+      if (resp && resp.ok) {
+        mostrarToast('✓ Propiedad guardada en Google Sheets y reflejada en index.html.');
+      } else if (resp && resp.offline) {
+        mostrarToast('✓ Propiedad guardada localmente y reflejada en index.html.');
+      } else {
+        mostrarToast('Guardado local; error al sincronizar: ' + ((resp && resp.error) || 'red'), 'error');
+      }
+    }
+
+    async function alternarEstatusPropiedad(idProp, nuevoEstatus) {
+      const idx = propsState.findIndex(p => p.idPropiedad === idProp);
+      if (idx === -1) return;
+
+      const actual = String(propsState[idx].estadoPublicacion || 'Activa').toLowerCase();
+      const siguiente = nuevoEstatus || ((actual === 'activa' || actual === 'disponible') ? 'Pausada' : 'Activa');
+      propsState[idx].estadoPublicacion = siguiente;
+
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarPropiedades();
+
+      const resp = await ejecutarAccionGas({
+        action: 'updatePropertyStatus',
+        idPropiedad: idProp,
+        estadoPublicacion: siguiente
+      });
+
+      if (resp && resp.ok) {
+        mostrarToast(`✓ Propiedad marcada como "${siguiente}" en Google Sheets.`);
+      } else {
+        mostrarToast(`Propiedad marcada como "${siguiente}" (reflejado en index.html).`);
+      }
+    }
+
+    async function quitarPropiedad(idProp) {
+      if (pendingDeletePropId !== idProp) {
+        pendingDeletePropId = idProp;
+        renderizarPropiedades();
+        mostrarToast('Haz clic de nuevo en "Confirmar borrar" para eliminarla.', 'error');
+        return;
+      }
+
+      pendingDeletePropId = null;
+      propsState = propsState.filter(p => p.idPropiedad !== idProp);
+      guardarCacheLocal();
+      actualizarKPIs();
+      renderizarPropiedades();
+
+      const resp = await ejecutarAccionGas({ action: 'deleteProperty', idPropiedad: idProp });
+      if (resp && resp.ok) {
+        mostrarToast('✓ Propiedad eliminada de Google Sheets.');
+      } else {
+        mostrarToast('✓ Propiedad eliminada del inventario.');
+      }
+    }
+
+    function renderizarPropiedades() {
+      const filtro = document.getElementById('prop-filter-estatus').value;
+      const listaEl = document.getElementById('props-list');
+      const previewEl = document.getElementById('public-props-preview');
+      const publicCountEl = document.getElementById('public-props-count');
+
+      const mostradas = propsState.filter(p => filtro === 'Todos' || p.estadoPublicacion === filtro);
+
+      if (mostradas.length === 0) {
+        listaEl.innerHTML = '<p class="text-sm text-slate-500 py-6 text-center">No hay propiedades registradas en este estatus.</p>';
+      } else {
+        listaEl.innerHTML = mostradas.map(p => {
+          const st = String(p.estadoPublicacion || 'Activa');
+          const isActiva = st.toLowerCase() === 'activa' || st.toLowerCase() === 'disponible';
+          const badgeClass = isActiva
+            ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+            : st.toLowerCase() === 'pausada' || st.toLowerCase() === 'apartada'
+              ? 'bg-amber-100 text-amber-800 border-amber-200'
+              : 'bg-rose-100 text-rose-800 border-rose-200';
+
+          const precioFmt = p.precioTexto && /\d/.test(p.precioTexto)
+            ? p.precioTexto
+            : ('$' + Number(p.precio || 0).toLocaleString('es-MX'));
+          const isConfirming = pendingDeletePropId === p.idPropiedad;
+          const imgSrc = resolverImagenPropiedad(p);
+          const fallbackImg = getFallbackImageByType(p.tipoPropiedad);
+
+          return `
+            <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/75 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+              <div class="flex items-start gap-3">
+                <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.titulo)}"
+                     onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+                     class="w-20 h-20 rounded-xl object-cover bg-slate-200 shrink-0 hidden sm:block border border-slate-200" />
+                <div class="space-y-1">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="text-[11px] font-extrabold text-slate-500">${escapeHtml(p.idPropiedad)}</span>
+                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold border ${badgeClass}">${escapeHtml(st)}</span>
+                    <span class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-900 text-[11px] font-bold">${escapeHtml(p.operacion)} · ${escapeHtml(p.tipoPropiedad)}</span>
+                  </div>
+                  <h3 class="text-sm sm:text-base font-extrabold text-blue-950 leading-snug">${escapeHtml(p.titulo)}</h3>
+                  <p class="text-xs text-slate-600">
+                    ${escapeHtml(p.ciudad)} — <strong class="text-emerald-700">${escapeHtml(precioFmt)}</strong>
+                    · <span class="text-slate-500">Agente: ${escapeHtml(p.agente || 'Josué Peña')}</span>
+                  </p>
+                  ${p.caracteristicas ? `<p class="text-xs text-slate-500">${escapeHtml(p.caracteristicas)}</p>` : ''}
+                </div>
+              </div>
+
+              <div class="flex flex-wrap sm:flex-col items-stretch sm:items-end gap-1.5 shrink-0">
+                <button type="button" onclick="editarPropiedad('${escapeHtml(p.idPropiedad)}')"
+                        class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-xs font-bold transition cursor-pointer">
+                  Editar
+                </button>
+                <button type="button" onclick="alternarEstatusPropiedad('${escapeHtml(p.idPropiedad)}')"
+                        class="px-3 py-1.5 rounded-lg ${isActiva ? 'bg-amber-100 hover:bg-amber-200 text-amber-900' : 'bg-emerald-600 hover:bg-emerald-700 text-white'} text-xs font-bold transition cursor-pointer">
+                  ${isActiva ? 'Pausar en web' : 'Publicar (Activa)'}
+                </button>
+                <button type="button" onclick="quitarPropiedad('${escapeHtml(p.idPropiedad)}')"
+                        class="px-3 py-1.5 rounded-lg ${isConfirming ? 'bg-rose-600 text-white' : 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'} text-xs font-bold transition cursor-pointer">
+                  ${isConfirming ? 'Confirmar borrar' : 'Eliminar'}
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const activas = propsState.filter(p => {
+        const st = String(p.estadoPublicacion || '').trim().toLowerCase();
+        return st === 'activa' || st === 'disponible';
+      });
+      publicCountEl.textContent = `${activas.length} activa${activas.length === 1 ? '' : 's'}`;
+
+      if (activas.length === 0) {
+        previewEl.innerHTML = '<p class="col-span-full text-xs text-slate-500 py-4 text-center">No hay propiedades en estado "Activa" para mostrar en index.html.</p>';
+      } else {
+        previewEl.innerHTML = activas.map(p => {
+          const precioFmt = p.precioTexto && /\d/.test(p.precioTexto)
+            ? p.precioTexto
+            : ('$' + Number(p.precio || 0).toLocaleString('es-MX'));
+          const imgSrc = resolverImagenPropiedad(p);
+          const fallbackImg = getFallbackImageByType(p.tipoPropiedad);
+
+          return `
+            <article class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col">
+              <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.titulo)}"
+                   onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+                   class="w-full h-32 object-cover bg-slate-200" />
+              <div class="p-3 space-y-1 flex-1">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">
+                    ${escapeHtml(p.operacion)} · ${escapeHtml(p.tipoPropiedad)}
+                  </span>
+                  <span class="text-[10px] font-bold text-slate-400">${escapeHtml(p.idPropiedad)}</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-extrabold text-blue-950 leading-snug">${escapeHtml(p.titulo)}</h4>
+                <p class="text-[11px] text-slate-600">${escapeHtml(p.ciudad)}</p>
+                <p class="text-xs font-extrabold text-emerald-700 pt-0.5">${escapeHtml(precioFmt)}</p>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+    }
+
+    function descargarCsvActivo() {
+      if (activeTab === 'propiedades') {
+        if (!propsState.length) {
+          mostrarToast('No hay propiedades para exportar.', 'error');
+          return;
+        }
+        const headers = ['ID Propiedad', 'Fecha Publicación', 'Título / Resumen', 'Operación', 'Tipo de Propiedad', 'Ciudad / Estado (México)', 'Precio', 'Características Clave', 'Estado Publicación', 'Agente', 'URL Imagen'];
+        const rows = propsState.map(p => [
+          p.idPropiedad, p.fechaPublicacion, p.titulo, p.operacion, p.tipoPropiedad,
+          p.ciudad, p.precioTexto || p.precio, p.caracteristicas, p.estadoPublicacion, p.agente, p.urlImagen
+        ].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(','));
+        descargarArchivo('\uFEFF' + [headers.join(','), ...rows].join('\n'), `propiedades-vision-inmobiliaria-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
+        mostrarToast('✓ CSV de propiedades descargado.');
+        return;
+      }
+
+      const filtrados = obtenerLeadsFiltrados();
+      if (!filtrados.length) {
+        mostrarToast('No hay prospectos para exportar con los filtros actuales.', 'error');
+        return;
+      }
+      const headers = ['Folio', 'Fecha / Hora', 'Nombre Completo', 'Teléfono / WhatsApp', 'Origen / Línea', 'Objetivo / Intención', 'Tipo de Propiedad', 'Ciudad / Estado (México)', 'Presupuesto Estimado', 'Detalles / Requerimientos', 'Estado de Seguimiento', 'Asesor Responsable'];
+      const rows = filtrados.map(l => [
+        l.folio, l.fechaHora, l.nombre, l.telefono, l.origenLinea, l.objetivo,
+        l.tipoPropiedad, l.ciudad, l.presupuesto, l.detalles, l.estado, l.asesor
+      ].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(','));
+      descargarArchivo('\uFEFF' + [headers.join(','), ...rows].join('\n'), `prospectos-vision-inmobiliaria-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
+      mostrarToast('✓ CSV de prospectos descargado.');
+    }
+
+    function descargarReporteResumen() {
+      const filtrados = obtenerLeadsFiltrados();
+      const activas = propsState.filter(p => {
+        const st = String(p.estadoPublicacion || '').toLowerCase();
+        return st === 'activa' || st === 'disponible';
+      });
+      const fechaHoy = new Date().toLocaleString('es-MX');
+
+      const lineas = [
+        'REPORTE OPERATIVO — VISIÓN INMOBILIARIA',
+        `Fecha de generación: ${fechaHoy}`,
+        '============================================================',
+        `Prospectos totales: ${leadsState.length} (Filtrados: ${filtrados.length})`,
+        `Propiedades activas en portal web: ${activas.length} (Totales: ${propsState.length})`,
+        '',
+        'PROPIEDADES ACTIVAS EN PORTAL WEB:',
+        ...activas.map((p, i) =>
+          `${i + 1}. [${p.idPropiedad}] ${p.titulo} — ${p.operacion} (${p.tipoPropiedad}) en ${p.ciudad} — ${p.precioTexto || ('$' + Number(p.precio || 0).toLocaleString('es-MX'))}`
+        ),
+        '',
+        'PROSPECTOS WEB:',
+        ...filtrados.map((l, i) =>
+          `${i + 1}. [${l.estado}] ${l.folio} | ${l.nombre} (${l.telefono}) | ${l.objetivo} - ${l.tipoPropiedad} en ${l.ciudad} | Presupuesto: ${l.presupuesto} | Origen: ${l.origenLinea}` +
+          (l.detalles ? `\n   Detalles: ${l.detalles}` : '')
+        )
+      ];
+
+      descargarArchivo(lineas.join('\n'), `reporte-vision-inmobiliaria-${new Date().toISOString().slice(0, 10)}.txt`, 'text/plain;charset=utf-8;');
+      mostrarToast('✓ Reporte resumen descargado.');
+    }
+
+    function descargarArchivo(contenido, nombre, mime) {
+      const blob = new Blob([contenido], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = nombre;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function copiarCodigoGas() {
+      const snippetHint = `// Copia el contenido completo del archivo Code.gs ubicado junto a index.html y Panel de Control.html\n// Spreadsheet ID: 1Ku65cMPFa9kBIp_No8KsVog5_4dLi2lLITdhTFkhyEU`;
+      try {
+        await navigator.clipboard.writeText(snippetHint);
+        mostrarToast('Abre el archivo Code.gs en tu carpeta vision-web y pégalo en Extensiones → Apps Script.');
+      } catch (e) {
+        mostrarToast('Abre el archivo Code.gs en tu carpeta vision-web para pegarlo en Apps Script.');
+      }
+    }
+
+    function renderizarTodo() {
+      actualizarKPIs();
+      renderizarPropiedades();
+      renderizarLeads();
+    }
+
+    // Escuchar cambios realizados desde index.html en otra pestaña
+    window.addEventListener('storage', (e) => {
+      if (e.key === SHARED_LEADS_KEY || e.key === SHARED_PROPS_KEY) {
+        cargarEstadoInicial();
+      }
+    });
+
+    cargarEstadoInicial();
+  </script>
+</body>
+</html>

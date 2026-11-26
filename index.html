@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visión Inmobiliaria | Búsqueda a la medida de propiedades en México</title>
+  <title>Visión Inmobiliaria | Propiedades Disponibles y Búsqueda a la Medida en México</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231e40af'/%3E%3Cstop offset='100%25' stop-color='%23172554'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%23fbbf24' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 29L32 13l20 16'/%3E%3Cpath d='M18 25v23a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V25'/%3E%3Cpath d='M27 51V37a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v14'/%3E%3C/g%3E%3C/svg%3E" />
-  <meta name="description" content="Visión Inmobiliaria: búsqueda a la medida de casas, departamentos, terrenos o locales en cualquier parte de México. Atención binacional para paisanos en EE. UU. y residentes en México." />
+  <meta name="description" content="Visión Inmobiliaria: propiedades disponibles y búsqueda a la medida de casas, departamentos, terrenos o locales en cualquier parte de México. Atención binacional para paisanos en EE. UU. y residentes en México." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,14 +21,29 @@
       }
     }
   </script>
+  <style>
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-amber-200 selection:text-blue-950">
 
   <!-- Barra superior informativa binacional -->
-  <div class="bg-blue-950 text-white text-xs py-1.5 px-4 border-b border-blue-900">
+  <div class="bg-blue-950 text-white text-xs py-2 px-4 border-b border-blue-900/80">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
-      <p class="text-blue-100 text-center sm:text-left font-medium">
-        Búsqueda personalizada en todo México · Atención directa en EE. UU. y México
+      <p class="text-blue-100/95 text-center sm:text-left font-medium flex items-center gap-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        <span>Búsqueda personalizada y catálogo en todo México · Atención directa en EE. UU. y México</span>
       </p>
       <div class="flex flex-wrap items-center justify-center gap-3 font-semibold">
         <a href="tel:+19154787644" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
@@ -45,12 +60,12 @@
   </div>
 
   <!-- 1. Header compacto y responsive -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-3">
         <!-- Marca -->
         <a href="#inicio" class="flex items-center gap-2.5 group shrink-0">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-xs group-hover:from-blue-950 group-hover:to-blue-800 transition">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-950 via-blue-900 to-blue-700 flex items-center justify-center shadow-sm ring-1 ring-amber-400/30 group-hover:scale-105 transition-transform">
             <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.1">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5M5.25 9.75V19.5A1.5 1.5 0 006.75 21h10.5a1.5 1.5 0 001.5-1.5V9.75M9.75 21v-5.25a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21" />
             </svg>
@@ -59,7 +74,7 @@
             <span class="block text-base sm:text-lg font-extrabold tracking-tight text-blue-950 leading-none">
               Visión Inmobiliaria
             </span>
-            <span class="block text-[11px] font-medium text-slate-500 mt-0.5">
+            <span class="block text-[11px] font-semibold text-amber-700 mt-0.5">
               A tu medida en México
             </span>
           </div>
@@ -67,6 +82,10 @@
 
         <!-- Navegación Desktop -->
         <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
+          <a href="#propiedades" class="hover:text-blue-900 transition-colors flex items-center gap-1.5">
+            <span>Propiedades</span>
+            <span id="nav-props-badge" class="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold">0</span>
+          </a>
           <a href="#como-funciona" class="hover:text-blue-900 transition-colors">Cómo funciona</a>
           <a href="#paisanos" class="hover:text-blue-900 transition-colors">Paisanos EE. UU.</a>
           <a href="#perfiles" class="hover:text-blue-900 transition-colors">Perfiles</a>
@@ -103,6 +122,10 @@
       <!-- Menú móvil desplegable -->
       <div id="mobile-menu" class="hidden lg:hidden pb-3 pt-2 border-t border-slate-100 space-y-2.5">
         <nav class="flex flex-col space-y-1 text-sm font-semibold text-slate-700">
+          <a href="#propiedades" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100 flex items-center justify-between">
+            <span>Propiedades disponibles</span>
+            <span id="mobile-props-badge" class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold">0</span>
+          </a>
           <a href="#como-funciona" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Cómo funciona</a>
           <a href="#paisanos" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Paisanos en EE. UU.</a>
           <a href="#perfiles" class="mobile-nav-link px-3 py-2 rounded-xl hover:bg-slate-100">Perfiles</a>
@@ -123,7 +146,7 @@
   </header>
 
   <!-- 2. Hero integrado con widget de encargo a la medida -->
-  <section id="inicio" class="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 pt-7 pb-9 sm:pt-9 sm:pb-11">
+  <section id="inicio" class="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950 pt-8 pb-10 sm:pt-11 sm:pb-14">
     <div class="absolute inset-0 z-0 pointer-events-none">
       <img
         src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
@@ -131,31 +154,48 @@
         onerror="this.onerror=null;this.src='https://placehold.co/1800x900/0f294a/e2e8f0?text=Vision+Inmobiliaria';"
         class="w-full h-full object-cover opacity-20"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-950/85 to-blue-900/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-950/88 to-slate-950/85"></div>
+      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl"></div>
+      <div class="absolute -bottom-24 right-0 w-96 h-96 rounded-full bg-emerald-400/10 blur-3xl"></div>
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-9 items-center">
 
         <!-- Columna izquierda: Propuesta de valor + tarjeta visual integrada -->
-        <div class="lg:col-span-6 space-y-4 text-white">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-300/40 text-amber-200 text-xs font-bold">
-            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
-            <span>Búsqueda a la medida en todo México · EE. UU. y MX</span>
+        <div class="lg:col-span-6 space-y-5 text-white">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/15 border border-amber-300/40 text-amber-200 text-xs font-bold backdrop-blur-xs">
+            <span class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+            <span>Búsqueda a la medida y propiedades verificadas en México</span>
           </div>
 
-          <h1 class="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-tight leading-[1.08]">
+          <h1 class="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight leading-[1.08]">
             Encontramos la propiedad que buscas en México, <span class="text-amber-300">sin perder tiempo</span>.
           </h1>
 
-          <p class="text-sm sm:text-base text-blue-100/95 leading-relaxed">
-            Buscamos casas, departamentos, terrenos o locales según tu ciudad, presupuesto y meta—tanto si vives en México como si eres paisano en Estados Unidos.
+          <p class="text-sm sm:text-base text-blue-100/95 leading-relaxed max-w-xl">
+            Explora nuestras propiedades disponibles o encárganos una búsqueda personalizada según tu ciudad, presupuesto y meta—tanto si vives en México como si eres paisano en Estados Unidos.
           </p>
 
+          <!-- Botones rápidos de acción en Hero -->
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="#propiedades"
+               class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-blue-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition">
+              <span>Ver propiedades disponibles</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            <a href="#paisanos"
+               class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs sm:text-sm backdrop-blur-xs transition">
+              <span>Atención a paisanos EE. UU.</span>
+            </a>
+          </div>
+
           <!-- Tarjeta visual compacta con datos clave -->
-          <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-900/90 shadow-xl">
+          <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-900/80 backdrop-blur-md shadow-2xl">
             <div class="grid grid-cols-1 sm:grid-cols-12 items-center">
-              <div class="sm:col-span-5 h-32 sm:h-full overflow-hidden">
+              <div class="sm:col-span-5 h-36 sm:h-full overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80"
                   alt="Sala y comedor luminosos con diseño moderno"
@@ -163,16 +203,16 @@
                   class="w-full h-full object-cover"
                 />
               </div>
-              <div class="sm:col-span-7 p-3.5 sm:p-4 space-y-2">
+              <div class="sm:col-span-7 p-4 space-y-2.5">
                 <p class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300">Atención directa y clara</p>
                 <p class="text-xs sm:text-sm text-slate-200 leading-snug">
                   Filtramos opciones reales, verificamos información disponible y te acompañamos a distancia o en persona.
                 </p>
                 <div class="flex flex-wrap items-center gap-2 pt-0.5 text-xs">
-                  <a href="tel:+19154787644" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-amber-200 font-bold transition">
+                  <a href="tel:+19154787644" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-amber-200 font-bold transition">
                     EE. UU. +1 915 478 7644
                   </a>
-                  <a href="tel:+526562066331" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-emerald-300 font-bold transition">
+                  <a href="tel:+526562066331" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-emerald-300 font-bold transition">
                     MX +52 656 206 6331
                   </a>
                 </div>
@@ -181,21 +221,47 @@
           </div>
         </div>
 
-        <!-- Columna derecha: Formulario de encargo directo a WhatsApp -->
+        <!-- Columna derecha: Formulario de encargo conectado a la Base de Datos -->
         <div class="lg:col-span-6">
-          <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden">
+          <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden ring-1 ring-white/20">
             <div class="h-1.5 bg-gradient-to-r from-blue-900 via-amber-400 to-emerald-500"></div>
             <div class="p-5 sm:p-6">
-              <div class="mb-4">
-                <span class="inline-block text-[11px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
-                  Encargo personalizado
+              <div class="mb-4 flex items-start justify-between gap-2">
+                <div>
+                  <span class="inline-block text-[11px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+                    Encargo personalizado
+                  </span>
+                  <h2 class="text-lg sm:text-xl font-extrabold text-blue-950">
+                    Cuéntanos qué propiedad buscas en México
+                  </h2>
+                </div>
+                <span id="form-db-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold shrink-0" title="Los registros se guardan automáticamente en la base de datos">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>Registro activo</span>
                 </span>
-                <h2 class="text-lg sm:text-xl font-extrabold text-blue-950">
-                  Cuéntanos qué propiedad buscas en México
-                </h2>
               </div>
 
               <form id="encargo-form" onsubmit="enviarEncargoWhatsApp(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label for="nombre_cliente" class="block text-xs font-bold text-slate-700 mb-1">
+                      Tu nombre completo
+                    </label>
+                    <input type="text" id="nombre_cliente" name="nombre_cliente" required
+                           placeholder="Ej. Carlos Mendoza"
+                           class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition" />
+                  </div>
+
+                  <div>
+                    <label for="telefono_cliente" class="block text-xs font-bold text-slate-700 mb-1">
+                      Tu WhatsApp o teléfono
+                    </label>
+                    <input type="tel" id="telefono_cliente" name="telefono_cliente" required
+                           placeholder="Ej. +1 915 555 0199"
+                           class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition" />
+                  </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label for="intencion" class="block text-xs font-bold text-slate-700 mb-1">
@@ -206,7 +272,7 @@
                       <option value="Comprar hogar">Comprar hogar</option>
                       <option value="Rentar propiedad">Rentar propiedad</option>
                       <option value="Invertir en inmuebles">Invertir en inmuebles</option>
-                      <option value="Retorno a México desde EE. UU.">Retorno desde EE. UU.</option>
+                      <option value="Retorno a México desde EE. UU.">Retorno a México desde EE. UU.</option>
                     </select>
                   </div>
 
@@ -255,16 +321,27 @@
                   </div>
                 </div>
 
-                <button type="submit"
+                <div>
+                  <label for="notas_cliente" class="block text-xs font-bold text-slate-700 mb-1">
+                    Detalles adicionales (opcional)
+                  </label>
+                  <input type="text" id="notas_cliente" name="notas_cliente"
+                         placeholder="Ej. 3 recámaras, cochera, cerca de escuelas o crédito..."
+                         class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none transition" />
+                </div>
+
+                <button type="submit" id="btn-submit-encargo"
                         class="w-full mt-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 transition cursor-pointer">
                   <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.531.078-1.203.109-1.938-.125-.453-.141-1.031-.344-1.766-.656-3.094-1.344-5.109-4.469-5.266-4.672-.156-.203-1.266-1.688-1.266-3.219s.797-2.281 1.078-2.594c.281-.313.609-.391.813-.391.203 0 .406 0 .578.016.188.016.438-.078.688.531.25.609.859 2.094.938 2.25.078.156.125.344.016.547-.109.203-.156.328-.313.5-.156.172-.328.391-.469.531-.156.156-.328.328-.141.641.188.313.844 1.391 1.813 2.25 1.25 1.109 2.297 1.453 2.609 1.609.313.156.5.125.688-.078.188-.203.797-.922 1.016-1.234.219-.313.422-.266.719-.156.297.109 1.875.891 2.188 1.047.313.156.516.234.594.359.078.125.078.734-.172 1.438z"/>
                   </svg>
-                  <span>Enviar encargo por WhatsApp</span>
+                  <span>Registrar solicitud y abrir WhatsApp</span>
                 </button>
 
+                <div id="db-save-toast" class="hidden rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 font-semibold text-center"></div>
+
                 <p class="text-[11px] text-center text-slate-500">
-                  Abre WhatsApp con tu solicitud lista para comenzar a revisar opciones.
+                  Tu solicitud queda registrada en nuestra base de datos con folio único y abre WhatsApp con tus datos listos.
                 </p>
               </form>
             </div>
@@ -275,10 +352,150 @@
     </div>
   </section>
 
-  <!-- 3. Cómo funciona en 3 pasos compactos -->
-  <section id="como-funciona" class="py-10 sm:py-12 bg-white border-t border-slate-200/80">
+  <!-- Franja de confianza binacional -->
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center sm:text-left">
+        <div class="flex items-center justify-center sm:justify-start gap-2.5">
+          <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-900 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </span>
+          <div>
+            <p class="text-xs font-extrabold text-blue-950">Todo México</p>
+            <p class="text-[11px] text-slate-500">Búsqueda en cualquier ciudad</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center sm:justify-start gap-2.5">
+          <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          </span>
+          <div>
+            <p class="text-xs font-extrabold text-blue-950">Atención Binacional</p>
+            <p class="text-[11px] text-slate-500">Líneas en EE. UU. y México</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center sm:justify-start gap-2.5">
+          <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <div>
+            <p class="text-xs font-extrabold text-blue-950">Filtro Previo</p>
+            <p class="text-[11px] text-slate-500">Opciones reales y verificadas</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center sm:justify-start gap-2.5">
+          <span class="w-8 h-8 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <div>
+            <p class="text-xs font-extrabold text-blue-950">Sin Costo Inicial</p>
+            <p class="text-[11px] text-slate-500">Orientación gratuita</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. CATÁLOGO DE PROPIEDADES PUBLICADAS (Conectado al Panel de Control y Google Sheets) -->
+  <section id="propiedades" class="py-11 sm:py-14 bg-slate-50 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <!-- Cabecera de sección -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
+              Catálogo actualizado
+            </span>
+            <span id="catalog-sync-pill" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span id="catalog-count-label">Cargando...</span>
+            </span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-950">
+            Propiedades disponibles ahora
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+            Inmuebles publicados directamente desde nuestro inventario activo. Pregunta por cualquiera o encárganos uno a tu medida.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="cargarPropiedadesPublicas(true)"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold shadow-2xs transition cursor-pointer">
+            <svg id="refresh-props-icon" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Actualizar catálogo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de filtros interactivos -->
+      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <!-- Pastillas por operación -->
+        <div class="flex flex-wrap items-center gap-1.5" id="op-filter-pills">
+          <button type="button" data-op="Todas" onclick="setFiltroOperacion('Todas')"
+                  class="op-pill px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-blue-950 text-white transition cursor-pointer">
+            Todas
+          </button>
+          <button type="button" data-op="Venta" onclick="setFiltroOperacion('Venta')"
+                  class="op-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            Venta
+          </button>
+          <button type="button" data-op="Renta" onclick="setFiltroOperacion('Renta')"
+                  class="op-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            Renta
+          </button>
+          <button type="button" data-op="Inversión" onclick="setFiltroOperacion('Inversión')"
+                  class="op-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            Inversión
+          </button>
+        </div>
+
+        <!-- Tipo y búsqueda -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 flex-1 lg:max-w-lg">
+          <select id="pub-filter-tipo" onchange="renderizarPropiedadesPublicas()"
+                  aria-label="Filtrar por tipo de propiedad"
+                  class="rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 focus:bg-white focus:border-blue-800 outline-none">
+            <option value="Todos">Todos los tipos</option>
+            <option value="Casa">Casa</option>
+            <option value="Departamento">Departamento</option>
+            <option value="Terreno / Lote">Terreno / Lote</option>
+            <option value="Local / Bodega">Local / Bodega</option>
+          </select>
+          <input type="search" id="pub-search" oninput="renderizarPropiedadesPublicas()"
+                 placeholder="Buscar ciudad, colonia o característica..."
+                 class="flex-1 rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-800 outline-none" />
+        </div>
+      </div>
+
+      <!-- Grid de propiedades disponibles -->
+      <div id="public-properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Estado vacío elegante -->
+      <div id="public-properties-empty" class="hidden bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-3">
+        <p class="text-base font-extrabold text-blue-950">No encontramos propiedades activas con ese filtro</p>
+        <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
+          Podemos buscar exactamente lo que necesitas en cualquier ciudad de México. Déjanos tu encargo personalizado arriba.
+        </p>
+        <div class="pt-1 flex justify-center gap-2">
+          <button type="button" onclick="resetearFiltrosPropiedades()"
+                  class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition cursor-pointer">
+            Ver todas las disponibles
+          </button>
+          <a href="#encargo-form"
+             class="px-4 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+            Hacer encargo a la medida
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Cómo funciona en 3 pasos compactos -->
+  <section id="como-funciona" class="py-11 sm:py-14 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-7">
         <div>
           <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
             Proceso simple
@@ -292,22 +509,22 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Paso 1 -->
-        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-md transition flex flex-col">
-          <div class="h-32 overflow-hidden bg-slate-200 relative">
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col">
+          <div class="h-36 overflow-hidden bg-slate-200 relative">
             <img
               src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"
               alt="Llaves y planificación de propiedad"
               onerror="this.onerror=null;this.src='https://placehold.co/800x400/dbeafe/1e3a8a?text=Paso+01';"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-xs font-extrabold">
+            <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-xs font-extrabold shadow-xs">
               01 · Encargo
             </span>
           </div>
-          <div class="p-4 flex-1">
-            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Define lo que buscas</h3>
+          <div class="p-5 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1.5">Define lo que buscas</h3>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Indica tipo de inmueble, ciudad o estado en México, presupuesto aproximado y si buscas comprar, rentar, invertir o regresar.
             </p>
@@ -315,20 +532,20 @@
         </div>
 
         <!-- Paso 2 -->
-        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-md transition flex flex-col">
-          <div class="h-32 overflow-hidden bg-slate-200 relative">
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col">
+          <div class="h-36 overflow-hidden bg-slate-200 relative">
             <img
               src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=800&q=80"
               alt="Revisión y validación de propiedades"
               onerror="this.onerror=null;this.src='https://placehold.co/800x400/fef3c7/92400e?text=Paso+02';"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-blue-950 text-xs font-extrabold">
+            <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-amber-400 text-blue-950 text-xs font-extrabold shadow-xs">
               02 · Búsqueda
             </span>
           </div>
-          <div class="p-4 flex-1">
-            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Filtro y validación previa</h3>
+          <div class="p-5 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1.5">Filtro y validación previa</h3>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Ubicamos opciones acordes a tu perfil, revisamos disponibilidad y verificamos información básica antes de presentártelas.
             </p>
@@ -336,20 +553,20 @@
         </div>
 
         <!-- Paso 3 -->
-        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-md transition flex flex-col">
-          <div class="h-32 overflow-hidden bg-slate-200 relative">
+        <div class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col">
+          <div class="h-36 overflow-hidden bg-slate-200 relative">
             <img
               src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
               alt="Patio y cierre de operación residencial"
               onerror="this.onerror=null;this.src='https://placehold.co/800x400/d1fae5/065f46?text=Paso+03';"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-extrabold">
+            <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-extrabold shadow-xs">
               03 · Cierre
             </span>
           </div>
-          <div class="p-4 flex-1">
-            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1">Acompañamiento real</h3>
+          <div class="p-5 flex-1">
+            <h3 class="text-base sm:text-lg font-bold text-blue-950 mb-1.5">Acompañamiento real</h3>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Coordinamos recorridos presenciales o a distancia y mantenemos comunicación clara hasta concluir la operación.
             </p>
@@ -359,43 +576,43 @@
     </div>
   </section>
 
-  <!-- 4. Sección paisanos en EE. UU. integrada y visual -->
-  <section id="paisanos" class="py-9 sm:py-11 bg-slate-100/80 border-t border-slate-200/80">
+  <!-- 5. Sección paisanos en EE. UU. integrada y visual -->
+  <section id="paisanos" class="py-10 sm:py-12 bg-slate-100/80 border-t border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-slate-900 rounded-2xl p-5 sm:p-7 text-white shadow-lg border border-blue-800/60">
+      <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-blue-800/60">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <div class="lg:col-span-7 space-y-3">
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold">
+          <div class="lg:col-span-7 space-y-3.5">
+            <span class="inline-block px-3 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold">
               Paisanos en Estados Unidos
             </span>
             <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
               ¿Vives en EE. UU. y buscas propiedad en México?
             </h2>
-            <p class="text-xs sm:text-sm text-blue-100 leading-relaxed">
-              Te atendemos desde nuestra línea en EE. UU. y coordinamos la búsqueda en México para hogar familiar, inversión o regreso planificado.
+            <p class="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-xl">
+              Te atendemos desde nuestra línea en EE. UU. y coordinamos la búsqueda en México para hogar familiar, inversión o regreso planificado, con seguimiento transparente a distancia.
             </p>
             <div class="flex flex-wrap gap-2.5 pt-1">
               <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Estoy%20en%20EE.%20UU.%20y%20busco%20una%20propiedad%20en%20M%C3%A9xico."
                  target="_blank" rel="noopener noreferrer"
-                 class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-sm transition">
+                 class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-sm transition">
                 WhatsApp EE. UU. (+1 915 478 7644)
               </a>
               <a href="tel:+19154787644"
-                 class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 font-semibold text-xs sm:text-sm transition">
+                 class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 font-semibold text-xs sm:text-sm transition">
                 Llamar ahora
               </a>
             </div>
           </div>
 
           <div class="lg:col-span-5">
-            <div class="rounded-xl overflow-hidden border border-white/15 bg-slate-900 shadow-md">
+            <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-900 shadow-lg">
               <img
                 src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80"
                 alt="Residencia moderna con patio iluminado"
                 onerror="this.onerror=null;this.src='https://placehold.co/800x450/1e3a8a/fde68a?text=EE.UU.+a+Mexico';"
-                class="w-full h-36 sm:h-40 object-cover"
+                class="w-full h-40 sm:h-44 object-cover"
               />
-              <div class="px-3.5 py-2.5 bg-slate-950/90 flex items-center justify-between gap-2 text-xs">
+              <div class="px-4 py-3 bg-slate-950/90 flex items-center justify-between gap-2 text-xs">
                 <span class="text-amber-300 font-bold">Seguimiento remoto</span>
                 <span class="text-slate-300">Fotos, detalles y avance claro</span>
               </div>
@@ -406,10 +623,10 @@
     </div>
   </section>
 
-  <!-- 5. Perfiles rápidos de búsqueda -->
-  <section id="perfiles" class="py-10 sm:py-12 bg-white border-t border-slate-200/80">
+  <!-- 6. Perfiles rápidos de búsqueda -->
+  <section id="perfiles" class="py-11 sm:py-14 bg-white border-t border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-7">
         <div>
           <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
             Acceso rápido
@@ -423,29 +640,29 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- Perfil 1 -->
-        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-md transition">
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
           <div>
-            <div class="h-28 overflow-hidden bg-slate-200 relative">
+            <div class="h-32 overflow-hidden bg-slate-200 relative">
               <img
                 src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
                 alt="Casa familiar con fachada y jardín"
                 onerror="this.onerror=null;this.src='https://placehold.co/800x400/dbeafe/1e3a8a?text=Comprar+Hogar';"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
                 Hogar
               </span>
             </div>
-            <div class="p-3.5 pb-2">
+            <div class="p-4 pb-2">
               <h3 class="text-base font-extrabold text-blue-950 mb-1">Comprar hogar</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Casas o departamentos en la zona y presupuesto que necesitas.
               </p>
             </div>
           </div>
-          <div class="p-3.5 pt-1 flex gap-1.5">
+          <div class="p-4 pt-2 flex gap-2">
             <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Comprar%20hogar%20en%20M%C3%A9xico."
                target="_blank" rel="noopener noreferrer"
                class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
@@ -460,27 +677,27 @@
         </div>
 
         <!-- Perfil 2 -->
-        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-md transition">
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
           <div>
-            <div class="h-28 overflow-hidden bg-slate-200 relative">
+            <div class="h-32 overflow-hidden bg-slate-200 relative">
               <img
                 src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80"
                 alt="Departamento luminoso en renta"
                 onerror="this.onerror=null;this.src='https://placehold.co/800x400/fef3c7/92400e?text=Rentar+Propiedad';"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-amber-400 text-blue-950 text-[11px] font-extrabold">
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-blue-950 text-[11px] font-extrabold">
                 Renta
               </span>
             </div>
-            <div class="p-3.5 pb-2">
+            <div class="p-4 pb-2">
               <h3 class="text-base font-extrabold text-blue-950 mb-1">Rentar propiedad</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Opciones vigentes para mudanza, familia o espacio comercial.
               </p>
             </div>
           </div>
-          <div class="p-3.5 pt-1 flex gap-1.5">
+          <div class="p-4 pt-2 flex gap-2">
             <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Rentar%20propiedad%20en%20M%C3%A9xico."
                target="_blank" rel="noopener noreferrer"
                class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
@@ -495,27 +712,27 @@
         </div>
 
         <!-- Perfil 3 -->
-        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-md transition">
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
           <div>
-            <div class="h-28 overflow-hidden bg-slate-200 relative">
+            <div class="h-32 overflow-hidden bg-slate-200 relative">
               <img
                 src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"
                 alt="Terreno con potencial de inversión"
                 onerror="this.onerror=null;this.src='https://placehold.co/800x400/d1fae5/065f46?text=Inversion';"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-700 text-white text-[11px] font-bold">
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-emerald-700 text-white text-[11px] font-bold">
                 Inversión
               </span>
             </div>
-            <div class="p-3.5 pb-2">
+            <div class="p-4 pb-2">
               <h3 class="text-base font-extrabold text-blue-950 mb-1">Inversión inmobiliaria</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Terrenos, lotes o propiedades con proyección patrimonial.
               </p>
             </div>
           </div>
-          <div class="p-3.5 pt-1 flex gap-1.5">
+          <div class="p-4 pt-2 flex gap-2">
             <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Busco%20Inversi%C3%B3n%20inmobiliaria%20en%20M%C3%A9xico."
                target="_blank" rel="noopener noreferrer"
                class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
@@ -530,27 +747,27 @@
         </div>
 
         <!-- Perfil 4 -->
-        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-400 hover:shadow-md transition">
+        <div class="group flex flex-col justify-between bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:border-blue-400 hover:shadow-lg hover:-translate-y-0.5 transition-all">
           <div>
-            <div class="h-28 overflow-hidden bg-slate-200 relative">
+            <div class="h-32 overflow-hidden bg-slate-200 relative">
               <img
                 src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
                 alt="Entrada de residencia para retorno"
                 onerror="this.onerror=null;this.src='https://placehold.co/800x400/e0e7ff/1e3a8a?text=Retorno';"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-blue-950/90 text-amber-300 text-[11px] font-bold">
                 Retorno
               </span>
             </div>
-            <div class="p-3.5 pb-2">
+            <div class="p-4 pb-2">
               <h3 class="text-base font-extrabold text-blue-950 mb-1">Retorno planificado</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Prepara tu hogar o terreno en México con anticipación desde EE. UU.
               </p>
             </div>
           </div>
-          <div class="p-3.5 pt-1 flex gap-1.5">
+          <div class="p-4 pt-2 flex gap-2">
             <a href="https://wa.me/19154787644?text=Hola%2C%20Visi%C3%B3n%20Inmobiliaria.%20Quiero%20planificar%20mi%20Retorno%20a%20M%C3%A9xico."
                target="_blank" rel="noopener noreferrer"
                class="flex-1 inline-flex items-center justify-center px-2.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
@@ -567,7 +784,7 @@
     </div>
   </section>
 
-  <!-- 6. FAQ compacto (4 preguntas esenciales) -->
+  <!-- 7. FAQ compacto (4 preguntas esenciales) -->
   <section id="faq" class="py-10 sm:py-12 bg-slate-100/75 border-t border-slate-200/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-5">
@@ -579,10 +796,10 @@
         </h2>
       </div>
 
-      <div class="space-y-2">
+      <div class="space-y-2.5">
         <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
           <button type="button" onclick="toggleFaq(1)" aria-expanded="true" id="faq-btn-1"
-                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3.5 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
             <span class="text-xs sm:text-sm">1. ¿Puedo buscar o comprar en México si vivo en Estados Unidos?</span>
             <svg id="faq-icon-1" class="w-4 h-4 text-amber-600 shrink-0 transform rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -595,7 +812,7 @@
 
         <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
           <button type="button" onclick="toggleFaq(2)" aria-expanded="false" id="faq-btn-2"
-                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3.5 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
             <span class="text-xs sm:text-sm">2. ¿En qué ciudades o estados de México realizan búsquedas?</span>
             <svg id="faq-icon-2" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -608,7 +825,7 @@
 
         <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
           <button type="button" onclick="toggleFaq(3)" aria-expanded="false" id="faq-btn-3"
-                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3.5 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
             <span class="text-xs sm:text-sm">3. ¿Qué revisan antes de presentar una propiedad?</span>
             <svg id="faq-icon-3" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -621,7 +838,7 @@
 
         <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
           <button type="button" onclick="toggleFaq(4)" aria-expanded="false" id="faq-btn-4"
-                  class="w-full flex items-center justify-between gap-4 px-4 py-3 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
+                  class="w-full flex items-center justify-between gap-4 px-4 py-3.5 text-left font-bold text-blue-950 hover:bg-slate-50 transition cursor-pointer">
             <span class="text-xs sm:text-sm">4. ¿Tiene costo enviar mi encargo inicial?</span>
             <svg id="faq-icon-4" class="w-4 h-4 text-amber-600 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -635,14 +852,14 @@
     </div>
   </section>
 
-  <!-- 7. Footer compacto -->
+  <!-- 8. Footer compacto -->
   <footer class="bg-blue-950 text-slate-300 py-8 border-t border-blue-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pb-6 border-b border-blue-900/80 items-start">
         <div class="md:col-span-6 space-y-2">
           <span class="block text-lg font-extrabold text-white">Visión Inmobiliaria</span>
           <p class="text-xs sm:text-sm text-blue-200/85 leading-relaxed max-w-md">
-            Búsqueda a la medida de propiedades en México con atención directa para residentes en México y paisanos en Estados Unidos.
+            Catálogo activo y búsqueda a la medida de propiedades en México con atención directa para residentes en México y paisanos en Estados Unidos.
           </p>
         </div>
 
@@ -667,42 +884,515 @@
 
       <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-blue-300/80">
         <p>© 2026 Visión Inmobiliaria. Todos los derechos reservados.</p>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center gap-4">
           <a href="#inicio" class="hover:text-white transition">Inicio</a>
+          <a href="#propiedades" class="hover:text-white transition">Propiedades</a>
           <a href="#como-funciona" class="hover:text-white transition">Cómo funciona</a>
           <a href="#paisanos" class="hover:text-white transition">Paisanos</a>
           <a href="#faq" class="hover:text-white transition">FAQ</a>
+          <a href="Panel%20de%20Control.html"
+             class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-900/90 hover:bg-blue-800 text-amber-300 border border-blue-700/70 font-bold transition">
+            <span>Panel de Control</span>
+          </a>
         </div>
       </div>
     </div>
   </footer>
 
+  <!-- Modal de ficha completa de propiedad -->
+  <div id="prop-detail-modal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-xs overflow-y-auto p-3 sm:p-6 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="pdm-title">
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto">
+      <div class="relative h-56 sm:h-64 bg-slate-900">
+        <img id="pdm-img" src="" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+        <button type="button" onclick="cerrarDetallePropiedad()" aria-label="Cerrar ficha"
+                class="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-950/75 hover:bg-slate-950 text-white font-bold flex items-center justify-center transition cursor-pointer">
+          ✕
+        </button>
+        <div class="absolute bottom-3 left-4 right-4 flex flex-wrap items-end justify-between gap-2 text-white">
+          <div>
+            <span id="pdm-badges" class="inline-block text-[11px] font-extrabold uppercase tracking-wider bg-amber-400 text-blue-950 px-2.5 py-0.5 rounded-full mb-1"></span>
+            <h3 id="pdm-title" class="text-lg sm:text-xl font-extrabold leading-snug"></h3>
+          </div>
+          <p id="pdm-price" class="text-lg sm:text-xl font-extrabold text-emerald-300 shrink-0"></p>
+        </div>
+      </div>
+      <div class="p-5 sm:p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600 border-b border-slate-100 pb-3">
+          <span id="pdm-location" class="font-bold text-blue-950"></span>
+          <span id="pdm-meta" class="text-slate-500 font-medium"></span>
+        </div>
+        <div>
+          <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1">Características clave</p>
+          <p id="pdm-features" class="text-sm text-slate-700 leading-relaxed"></p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+          <a id="pdm-wa-usa" href="#" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            <span>Consultar por WhatsApp EE. UU.</span>
+          </a>
+          <a id="pdm-wa-mx" href="#" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs sm:text-sm font-bold transition">
+            <span>Consultar por WhatsApp México</span>
+          </a>
+        </div>
+        <button type="button" id="pdm-similar-btn"
+                class="w-full py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-extrabold transition cursor-pointer">
+          Solicitar opciones similares a esta propiedad
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function enviarEncargoWhatsApp(event) {
-      event.preventDefault();
+    /**
+     * =========================================================================
+     * CONFIGURACIÓN DE CONEXIÓN CON GOOGLE SHEETS (Apps Script Web App)
+     * =========================================================================
+     * Si ya publicaste Code.gs como Web App, pega tu URL (/exec) abajo en
+     * DEFAULT_GAS_URL para que cualquier visitante vea las propiedades en vivo
+     * y los encargos se guarden automáticamente en Google Sheets.
+     * Mientras esté vacío, también se sincroniza con Panel de Control.html vía
+     * almacenamiento compartido del navegador (localStorage).
+     */
+    const DEFAULT_GAS_URL = '';
+
+    const SHARED_GAS_URL_KEY = 'vi_shared_gas_url_v2';
+    const SHARED_PROPS_KEY = 'vi_shared_props_v2';
+    const SHARED_LEADS_KEY = 'vi_shared_leads_v2';
+
+    // Datos iniciales idénticos al ejemplo de la hoja "Propiedades Publicadas"
+    const FALLBACK_PUBLIC_PROPS = [
+      {
+        idPropiedad: 'PROP-2025-001 [EJEMPLO]',
+        fechaPublicacion: '2025-02-18',
+        titulo: 'Residencia Moderna en Fraccionamiento Privado Rincones de San Marcos',
+        operacion: 'Venta',
+        tipoPropiedad: 'Casa',
+        ciudad: 'Ciudad Juárez, Chihuahua',
+        precio: 4250000,
+        precioTexto: '$4,250,000',
+        caracteristicas: '3 recámaras, 2.5 baños, cocina integral de granito, estancia, cochera para 2 autos y patio.',
+        estadoPublicacion: 'Activa',
+        agente: 'Josué Peña',
+        urlImagen: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        idPropiedad: 'PROP-2025-002 [EJEMPLO]',
+        fechaPublicacion: '2025-02-19',
+        titulo: 'Departamento de Lujo en Torre Residencial con Amenidades Premium',
+        operacion: 'Inversión',
+        tipoPropiedad: 'Departamento',
+        ciudad: 'Zapopan, Jalisco',
+        precio: 3890000,
+        precioTexto: '$3,890,000',
+        caracteristicas: '2 recámaras, 2 baños completos, balcón panorámico, bodega, 1 estacionamiento; alberca y gym.',
+        estadoPublicacion: 'Activa',
+        agente: 'Josué Peña',
+        urlImagen: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80'
+      }
+    ];
+
+    let propiedadesCatalogo = [];
+    let filtroOperacionActual = 'Todas';
+
+    function getGasUrl() {
+      const stored = (localStorage.getItem(SHARED_GAS_URL_KEY) || '').trim();
+      return stored || DEFAULT_GAS_URL.trim();
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getFallbackImageByType(tipo) {
+      const t = String(tipo || '').toLowerCase();
+      if (t.includes('departamento')) {
+        return 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80';
+      }
+      if (t.includes('terreno') || t.includes('lote')) {
+        return 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80';
+      }
+      if (t.includes('local') || t.includes('bodega')) {
+        return 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80';
+      }
+      return 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80';
+    }
+
+    function resolverImagenPropiedad(prop) {
+      const url = String(prop.urlImagen || '').trim();
+      // Si la URL es válida y no apunta a un dominio de ejemplo sin activos locales
+      if (url && /^https?:\/\//i.test(url) && !url.includes('visioninmobiliaria.mx/img/')) {
+        return url;
+      }
+      return getFallbackImageByType(prop.tipoPropiedad);
+    }
+
+    function formatearPrecioPropiedad(prop) {
+      if (prop.precioTexto && /\d/.test(prop.precioTexto)) {
+        return prop.precioTexto;
+      }
+      const num = Number(prop.precio || 0);
+      if (num > 0) {
+        return '$' + num.toLocaleString('es-MX');
+      }
+      return 'Consultar precio';
+    }
+
+    function obtenerPropiedadesLocales() {
       try {
+        const raw = localStorage.getItem(SHARED_PROPS_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {}
+      return FALLBACK_PUBLIC_PROPS.slice();
+    }
+
+    async function cargarPropiedadesPublicas(manual = false) {
+      const icon = document.getElementById('refresh-props-icon');
+      if (manual && icon) icon.classList.add('animate-spin');
+
+      const gasUrl = getGasUrl();
+      let loadedFromSheets = false;
+
+      if (gasUrl) {
+        try {
+          const res = await fetch(`${gasUrl}?action=getPublicProperties`);
+          const data = await res.json();
+          if (data && data.ok && Array.isArray(data.properties)) {
+            propiedadesCatalogo = data.properties;
+            loadedFromSheets = true;
+          }
+        } catch (err) {
+          console.warn('No se pudo cargar catálogo remoto, usando caché local:', err);
+        }
+      }
+
+      if (!loadedFromSheets) {
+        propiedadesCatalogo = obtenerPropiedadesLocales().filter(p => {
+          const st = String(p.estadoPublicacion || '').trim().toLowerCase();
+          return st === 'activa' || st === 'disponible';
+        });
+      }
+
+      const pill = document.getElementById('catalog-sync-pill');
+      const countLabel = document.getElementById('catalog-count-label');
+      const navBadge = document.getElementById('nav-props-badge');
+      const mobBadge = document.getElementById('mobile-props-badge');
+
+      const totalActivas = propiedadesCatalogo.length;
+      if (navBadge) navBadge.textContent = totalActivas;
+      if (mobBadge) mobBadge.textContent = totalActivas;
+      if (countLabel) {
+        countLabel.textContent = loadedFromSheets
+          ? `${totalActivas} disponible${totalActivas === 1 ? '' : 's'} · En vivo desde Google Sheets`
+          : `${totalActivas} disponible${totalActivas === 1 ? '' : 's'} · Catálogo sincronizado`;
+      }
+      if (pill && loadedFromSheets) {
+        pill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold';
+      }
+
+      renderizarPropiedadesPublicas();
+      if (manual && icon) setTimeout(() => icon.classList.remove('animate-spin'), 450);
+    }
+
+    function setFiltroOperacion(op) {
+      filtroOperacionActual = op;
+      document.querySelectorAll('.op-pill').forEach(btn => {
+        if (btn.dataset.op === op) {
+          btn.className = 'op-pill px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-blue-950 text-white transition cursor-pointer';
+        } else {
+          btn.className = 'op-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer';
+        }
+      });
+      renderizarPropiedadesPublicas();
+    }
+
+    function resetearFiltrosPropiedades() {
+      document.getElementById('pub-filter-tipo').value = 'Todos';
+      document.getElementById('pub-search').value = '';
+      setFiltroOperacion('Todas');
+    }
+
+    function renderizarPropiedadesPublicas() {
+      const grid = document.getElementById('public-properties-grid');
+      const empty = document.getElementById('public-properties-empty');
+      const tipoFiltro = document.getElementById('pub-filter-tipo').value;
+      const query = (document.getElementById('pub-search').value || '').trim().toLowerCase();
+
+      const filtradas = propiedadesCatalogo.filter(p => {
+        const st = String(p.estadoPublicacion || '').trim().toLowerCase();
+        if (st !== 'activa' && st !== 'disponible') return false;
+        if (filtroOperacionActual !== 'Todas' && String(p.operacion || '').toLowerCase() !== filtroOperacionActual.toLowerCase()) return false;
+        if (tipoFiltro !== 'Todos' && String(p.tipoPropiedad || '').toLowerCase() !== tipoFiltro.toLowerCase()) return false;
+        const txt = `${p.idPropiedad} ${p.titulo} ${p.ciudad} ${p.caracteristicas} ${p.tipoPropiedad} ${p.operacion}`.toLowerCase();
+        return !query || txt.includes(query);
+      });
+
+      if (filtradas.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      grid.innerHTML = filtradas.map(p => {
+        const imgSrc = resolverImagenPropiedad(p);
+        const fallbackImg = getFallbackImageByType(p.tipoPropiedad);
+        const precioFmt = formatearPrecioPropiedad(p);
+        const opColor = String(p.operacion || '').toLowerCase() === 'renta'
+          ? 'bg-amber-400 text-blue-950'
+          : String(p.operacion || '').toLowerCase() === 'inversión'
+            ? 'bg-emerald-500 text-white'
+            : 'bg-blue-900 text-white';
+
+        const msgWa = encodeURIComponent(
+          `Hola, Visión Inmobiliaria. Me interesa la propiedad publicada:\n` +
+          `• ID: ${p.idPropiedad}\n` +
+          `• Propiedad: ${p.titulo}\n` +
+          `• Ciudad: ${p.ciudad}\n` +
+          `• Precio: ${precioFmt}\n` +
+          `¿Me pueden brindar más información o agendar recorrido?`
+        );
+
+        return `
+          <article class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="relative h-52 overflow-hidden bg-slate-200 cursor-pointer" onclick="abrirDetallePropiedad('${escapeHtml(p.idPropiedad)}')">
+                <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.titulo)}"
+                     onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent"></div>
+
+                <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-xs ${opColor}">
+                    ${escapeHtml(p.operacion)}
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full bg-white/95 text-blue-950 text-[11px] font-bold shadow-xs">
+                    ${escapeHtml(p.tipoPropiedad)}
+                  </span>
+                </div>
+
+                <span class="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600/95 text-white text-[10px] font-extrabold shadow-xs">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse"></span>
+                  Disponible
+                </span>
+
+                <div class="absolute bottom-3 left-3.5 right-3.5 flex items-end justify-between gap-2 text-white">
+                  <div>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-amber-300">${escapeHtml(p.idPropiedad)}</p>
+                    <p class="text-xl font-extrabold tracking-tight leading-none mt-0.5">${escapeHtml(precioFmt)}</p>
+                  </div>
+                  <span class="text-[11px] font-bold bg-white/15 hover:bg-white/25 backdrop-blur-xs px-2.5 py-1 rounded-lg">
+                    Ver ficha →
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-4 sm:p-5 space-y-2.5">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-blue-800">
+                  <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                  <span>${escapeHtml(p.ciudad)}</span>
+                </div>
+
+                <h3 onclick="abrirDetallePropiedad('${escapeHtml(p.idPropiedad)}')"
+                    class="text-base font-extrabold text-blue-950 leading-snug line-clamp-2 cursor-pointer group-hover:text-blue-800 transition-colors">
+                  ${escapeHtml(p.titulo)}
+                </h3>
+
+                <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                  ${escapeHtml(p.caracteristicas || 'Contáctanos para conocer todos los detalles, ubicación y disponibilidad actual.')}
+                </p>
+              </div>
+            </div>
+
+            <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-2 border-t border-slate-100 space-y-2.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500">
+                <span>Asesor: <strong class="text-slate-700">${escapeHtml(p.agente || 'Josué Peña')}</strong></span>
+                <button type="button" onclick="abrirDetallePropiedad('${escapeHtml(p.idPropiedad)}')"
+                        class="font-bold text-blue-800 hover:underline cursor-pointer">
+                  Detalles
+                </button>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <a href="https://wa.me/19154787644?text=${msgWa}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+                  WhatsApp EE. UU.
+                </a>
+                <a href="https://wa.me/526562066331?text=${msgWa}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold transition">
+                  WhatsApp México
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function abrirDetallePropiedad(idPropiedad) {
+      const prop = propiedadesCatalogo.find(p => p.idPropiedad === idPropiedad);
+      if (!prop) return;
+
+      const imgEl = document.getElementById('pdm-img');
+      const fallback = getFallbackImageByType(prop.tipoPropiedad);
+      imgEl.src = resolverImagenPropiedad(prop);
+      imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = fallback; };
+      imgEl.alt = prop.titulo || 'Propiedad';
+
+      document.getElementById('pdm-badges').textContent = `${prop.operacion} · ${prop.tipoPropiedad} · ${prop.idPropiedad}`;
+      document.getElementById('pdm-title').textContent = prop.titulo || '';
+      document.getElementById('pdm-price').textContent = formatearPrecioPropiedad(prop);
+      document.getElementById('pdm-location').textContent = `📍 ${prop.ciudad || 'México'}`;
+      document.getElementById('pdm-meta').textContent = `Asesor: ${prop.agente || 'Josué Peña'} · Pub: ${prop.fechaPublicacion || ''}`;
+      document.getElementById('pdm-features').textContent = prop.caracteristicas || 'Solicita la ficha completa por WhatsApp.';
+
+      const msgWa = encodeURIComponent(
+        `Hola, Visión Inmobiliaria. Solicito información de:\n` +
+        `• ID: ${prop.idPropiedad}\n` +
+        `• Propiedad: ${prop.titulo}\n` +
+        `• Ciudad: ${prop.ciudad}\n` +
+        `• Precio: ${formatearPrecioPropiedad(prop)}`
+      );
+      document.getElementById('pdm-wa-usa').href = `https://wa.me/19154787644?text=${msgWa}`;
+      document.getElementById('pdm-wa-mx').href = `https://wa.me/526562066331?text=${msgWa}`;
+
+      document.getElementById('pdm-similar-btn').onclick = () => {
+        cerrarDetallePropiedad();
+        document.getElementById('tipo_propiedad').value = prop.tipoPropiedad || 'Casa';
+        document.getElementById('ciudad').value = prop.ciudad || '';
+        document.getElementById('notas_cliente').value = `Busco opciones similares a ${prop.idPropiedad} (${prop.titulo})`;
+        document.getElementById('encargo-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+
+      document.getElementById('prop-detail-modal').classList.remove('hidden');
+    }
+
+    function cerrarDetallePropiedad() {
+      document.getElementById('prop-detail-modal').classList.add('hidden');
+    }
+
+    function generarFolioProspecto() {
+      const ahora = new Date();
+      const anio = ahora.getFullYear();
+      const rand = Math.floor(100 + Math.random() * 900);
+      return `VI-${anio}-${rand}`;
+    }
+
+    function formatearFechaHoraSheet() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function guardarLeadLocal(lead) {
+      try {
+        const raw = localStorage.getItem(SHARED_LEADS_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        const arr = Array.isArray(list) ? list : [];
+        arr.unshift(lead);
+        localStorage.setItem(SHARED_LEADS_KEY, JSON.stringify(arr));
+      } catch (e) {
+        console.warn('No se pudo guardar el prospecto localmente:', e);
+      }
+    }
+
+    async function enviarEncargoWhatsApp(event) {
+      event.preventDefault();
+      const btn = document.getElementById('btn-submit-encargo');
+      const toast = document.getElementById('db-save-toast');
+
+      try {
+        const nombre = document.getElementById('nombre_cliente').value.trim();
+        const telefono = document.getElementById('telefono_cliente').value.trim();
         const intencion = document.getElementById('intencion').value;
         const tipo = document.getElementById('tipo_propiedad').value;
         const ciudad = document.getElementById('ciudad').value.trim();
         const presupuesto = document.getElementById('presupuesto').value.trim();
         const linea = document.getElementById('linea_contacto').value;
+        const notas = document.getElementById('notas_cliente').value.trim();
+
+        const folio = generarFolioProspecto();
+        const fechaHora = formatearFechaHoraSheet();
+        const origenLinea = (linea === 'usa')
+          ? 'EE. UU. (+1 915 478 7644)'
+          : 'México (+52 656 206 6331)';
+
+        const nuevoProspecto = {
+          folio: folio,
+          fechaHora: fechaHora,
+          nombre: nombre,
+          telefono: telefono,
+          origenLinea: origenLinea,
+          objetivo: intencion,
+          tipoPropiedad: tipo,
+          ciudad: ciudad,
+          presupuesto: presupuesto,
+          detalles: notas,
+          estado: 'Nuevo',
+          asesor: 'Josué Peña'
+        };
+
+        guardarLeadLocal(nuevoProspecto);
+
+        if (btn) btn.disabled = true;
+
+        const gasUrl = getGasUrl();
+        let syncedRemote = false;
+        if (gasUrl) {
+          try {
+            const res = await fetch(gasUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ action: 'createLead', lead: nuevoProspecto })
+            });
+            const data = await res.json();
+            if (data && data.ok) syncedRemote = true;
+          } catch (err) {
+            console.warn('Error enviando prospecto a Google Sheets:', err);
+          }
+        }
+
+        if (toast) {
+          toast.textContent = syncedRemote
+            ? `✓ Solicitud guardada en la base de datos con folio ${folio}. Abriendo WhatsApp...`
+            : `✓ Solicitud registrada con folio ${folio}. Abriendo WhatsApp...`;
+          toast.classList.remove('hidden');
+        }
 
         const numeroTelefono = (linea === 'usa') ? '19154787644' : '526562066331';
-
         const mensaje = `Hola, Visión Inmobiliaria. Me gustaría hacer un encargo de búsqueda a la medida:\n\n` +
+          `• Folio: ${folio}\n` +
+          `• Nombre: ${nombre}\n` +
+          `• Teléfono: ${telefono}\n` +
           `• Objetivo: ${intencion}\n` +
           `• Tipo de propiedad: ${tipo}\n` +
           `• Ubicación deseada: ${ciudad}\n` +
-          `• Presupuesto estimado: ${presupuesto}\n\n` +
-          `Quedo atento a su respuesta para revisar opciones disponibles.`;
+          `• Presupuesto estimado: ${presupuesto}\n` +
+          (notas ? `• Detalles: ${notas}\n` : '') +
+          `\nQuedo atento a su respuesta para revisar opciones disponibles.`;
 
         const urlWa = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWa, '_blank', 'noopener,noreferrer');
+        document.getElementById('encargo-form').reset();
       } catch (err) {
-        console.error('Error al preparar el enlace de WhatsApp:', err);
+        console.error('Error al procesar el encargo:', err);
+      } finally {
+        if (btn) btn.disabled = false;
       }
     }
 
+    // Menú móvil
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const iconOpen = document.getElementById('menu-icon-open');
@@ -736,6 +1426,15 @@
       icon.classList.toggle('rotate-180');
       btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     }
+
+    // Sincronización automática si se edita en Panel de Control.html en otra pestaña
+    window.addEventListener('storage', (e) => {
+      if (e.key === SHARED_PROPS_KEY || e.key === SHARED_GAS_URL_KEY) {
+        cargarPropiedadesPublicas(false);
+      }
+    });
+
+    cargarPropiedadesPublicas(false);
   </script>
 </body>
 </html>
